@@ -131,11 +131,11 @@
   .maplibregl-popup-content { border-radius: 3px; padding: 8px 10px; border: 1px solid #888; }
 
   /* 나침반 */
-  #compass { position: absolute; right: 60px; top: 10px; z-index: 6; width: 76px; height: 76px; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #e8e8e8 70%, #cfcfcf 100%); border: 1px solid #999; box-shadow: 0 2px 6px rgba(0,0,0,.3); display: flex; align-items: center; justify-content: center; }
-  #compass svg { width: 70px; height: 70px; }
+  #compass { position: absolute; right: 4px; bottom: 34px; z-index: 6; width: 64px; height: 64px; cursor: pointer; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #e8e8e8 70%, #cfcfcf 100%); border: 1px solid #999; box-shadow: 0 2px 6px rgba(0,0,0,.3); display: flex; align-items: center; justify-content: center; }
+  #compass svg { width: 58px; height: 58px; }
 
   /* 우측 세로 도구줄 · 세로 탭 */
-  #tool-strip { position: absolute; right: 8px; top: 96px; z-index: 6; display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  #tool-strip { position: absolute; right: 38px; top: 96px; z-index: 6; display: flex; flex-direction: column; gap: 4px; align-items: center; }
   #tool-strip .ibtn { width: 26px; height: 26px; padding: 0; justify-content: center; background: #fff; }
   #tool-strip .ibtn.on { background: var(--blue); color: #fff; border-color: #23499a; }
   #tool-strip .zoom { display: flex; flex-direction: column; align-items: center; background: #fff; border: 1px solid #b5b5b5; border-radius: 3px; padding: 2px; }
@@ -157,7 +157,7 @@
   .fpanel .fbody { overflow: auto; }
 
   /* 상황정보 패널(우측) */
-  #info-panel { right: 62px; top: 44px; width: var(--panel-w); max-height: calc(100% - 60px); }
+  #info-panel { right: 74px; top: 44px; width: var(--panel-w); max-height: calc(100% - 60px); }
   #info-panel .fbody { padding: 0; }
   .ip-head { padding: 6px 8px 4px; }
   .ip-head table.grid td { padding: 3px 6px; }
@@ -250,8 +250,8 @@
   .ev-sentence { background: #eef7ee; border-left: 3px solid #4a9a5a; padding: 5px 8px; margin-bottom: 8px; }
 
   /* AI 어시스턴트 팝업 */
-  #chat-panel { right: 62px; bottom: 44px; width: 390px; height: 480px; max-height: calc(100% - 60px); z-index: 9; }
-  #chat-fab { position: absolute; right: 62px; bottom: 44px; z-index: 8; border-radius: 20px; padding: 6px 14px 6px 12px; background: var(--blue); border-color: #23499a; color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+  #chat-panel { right: 74px; bottom: 44px; width: 390px; height: 480px; max-height: calc(100% - 60px); z-index: 9; }
+  #chat-fab { position: absolute; right: 74px; bottom: 44px; z-index: 8; border-radius: 20px; padding: 6px 14px 6px 12px; background: var(--blue); border-color: #23499a; color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
   #chat-fab:hover { background: #244f9e; }
   #chat-fab svg { stroke: #fff; }
   #chat-panel .fbody { display: flex; flex-direction: column; flex: 1; padding: 6px; }
@@ -278,8 +278,8 @@
   .chart .lbl { position: absolute; left: 4px; top: 2px; font-size: 10px; color: #222; font-weight: 700; }
 
   /* 기상 · 범례 패널 */
-  #weather-panel { right: calc(62px + var(--panel-w) + 8px); top: 44px; width: 300px; }
-  #legend-panel { right: calc(62px + var(--panel-w) + 8px); top: 44px; width: 260px; }
+  #weather-panel { right: calc(74px + var(--panel-w) + 8px); top: 44px; width: 300px; }
+  #legend-panel { right: calc(74px + var(--panel-w) + 8px); top: 44px; width: 260px; }
   #weather-panel .fbody, #legend-panel .fbody { padding: 8px; }
   .bars { display: flex; align-items: flex-end; gap: 3px; height: 60px; padding-top: 12px; border-bottom: 1px solid #bbb; }
   .bars .bar { flex: 1; background: #3d6bc4; position: relative; min-height: 2px; }
@@ -302,7 +302,7 @@
   #bottom-dock table.grid td { padding: 3px 6px; }
   #bottom-dock table.grid tr.mock td:first-child { color: var(--red); font-weight: 700; }
 
-  #coord { position: absolute; right: 62px; bottom: 6px; z-index: 6; background: rgba(255,255,255,.9); border: 1px solid #999; padding: 1px 6px; font-size: 11px; color: #222; }
+  #coord { position: absolute; right: 74px; bottom: 6px; z-index: 6; background: rgba(255,255,255,.9); border: 1px solid #999; padding: 1px 6px; font-size: 11px; color: #222; }
   #toast { position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%); z-index: 95; background: #333; color: #fff; padding: 7px 14px; border-radius: 3px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.4); display: none; }
   #toast.on { display: block; }
   #modal-bg { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; }
@@ -352,7 +352,7 @@
       </div>
     </div>
     <div class="lg-notice">
-      <div class="lg-notice-hd">공지사항<span class="fake small" title="가상값">(시연용)</span></div>
+      <div class="lg-notice-hd">공지사항<span class="fake small" title="가상값">(시연용)</span><a href="#" id="lg-sources-link" style="margin-left:auto;font-weight:400;font-size:11.5px">데이터 출처·실제/가상 구분</a></div>
       <ul><li><span class="num">2025-03-21</span> 봄철 산불조심기간 대응단계 판단기준 안내 — 2026년 개편 체계(초기대응·확산대응 1·2단계)로 표시됩니다.</li><li><span class="num">2025-03-15</span> 확산 예측 갱신 주기 1시간 · 위험구역 5h/잠재 8h 기준 적용</li><li><span class="num">2025-03-02</span> 시연 데이터 안내 — 화선은 합성 모델, 인구·수용 인원·자원 수는 가상값(상단 ⓘ 출처)</li></ul>
     </div>
   </div>
@@ -368,10 +368,7 @@
     <button class="red menu-btn on" data-menu="status">산불현황</button>
     <button class="red menu-btn" data-menu="predict">확산예측</button>
     <button class="red menu-btn" data-menu="proposal">대응제안</button>
-    <button class="red menu-btn" data-menu="chat">AI 어시스턴트</button>
-    <button class="red menu-btn" data-menu="weather">기상정보</button>
     <button class="red menu-btn" data-menu="log">상황기록</button>
-    <button class="red menu-btn" data-menu="sources">출처</button>
   </div>
   <div class="user"><span id="hdr-user">—</span><button id="btn-logout" class="ibtn" title="로그아웃"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M21 4v16"/></svg></button></div>
 </header>
@@ -399,7 +396,7 @@
 
 <div id="stage">
   <div id="map"></div>
-  <div id="compass"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#999"/><polygon points="50,8 56,50 50,44 44,50" fill="#d0342c"/><polygon points="50,92 56,50 50,56 44,50" fill="#555"/><polygon points="8,50 50,44 44,50 50,56" fill="#777"/><polygon points="92,50 50,44 56,50 50,56" fill="#777"/><text x="50" y="7" font-size="10" text-anchor="middle" fill="#222" font-weight="700">북</text><text x="50" y="99" font-size="10" text-anchor="middle" fill="#222">남</text><text x="4" y="53" font-size="10" fill="#222">서</text><text x="90" y="53" font-size="10" fill="#222">동</text></svg></div>
+  <div id="compass" title="북쪽 맞춤"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#999"/><polygon points="50,8 56,50 50,44 44,50" fill="#d0342c"/><polygon points="50,92 56,50 50,56 44,50" fill="#555"/><polygon points="8,50 50,44 44,50 50,56" fill="#777"/><polygon points="92,50 50,44 56,50 50,56" fill="#777"/><text x="50" y="7" font-size="10" text-anchor="middle" fill="#222" font-weight="700">북</text><text x="50" y="99" font-size="10" text-anchor="middle" fill="#222">남</text><text x="4" y="53" font-size="10" fill="#222">서</text><text x="90" y="53" font-size="10" fill="#222">동</text></svg></div>
 
   <!-- 우측 세로 도구줄 -->
   <div id="tool-strip">
@@ -407,11 +404,8 @@
     <div class="zoom"><input id="ts-zoom" type="range" min="8" max="16" step="0.1" value="11.4" title="축척"></div>
     <button class="ibtn" id="ts-zoom-out" title="축소"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
     <button class="ibtn" id="ts-fit" title="범위 맞춤"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
-    <button class="ibtn" id="ts-north" title="북쪽 맞춤"><svg viewBox="0 0 24 24"><path d="M12 3l4 9-4-2-4 2z"/><path d="M12 12v9"/></svg></button>
     <button class="ibtn" id="ts-sat" title="위성영상/일반지도"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg></button>
     <button class="ibtn" id="ts-3d" title="3D 지형"><svg viewBox="0 0 24 24"><path d="M3 20l6-10 4 6 3-4 5 8H3z"/></svg></button>
-    <button class="ibtn" id="ts-info" title="상황정보 창"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 4v16"/></svg></button>
-    <button class="ibtn" id="ts-log" title="상황기록"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>
   </div>
   <div id="vtabs">
     <div class="vtab on" data-v="fire">산불</div>
@@ -440,7 +434,7 @@
       <div id="ipt-status" class="ipt on">
         <div class="sec">상황 접수 · 판정<i class="info l" data-tip="접수 기관·시각은 보도 기준 실제 경과를 참고한 시연값. 공식 단계는 2026년 개편 체계(초기대응·확산대응 1·2단계)로 표시하며, 판정 단계는 5시간 후 예상 피해면적 등 판단기준(표준매뉴얼 p.73)으로 계산한 값입니다."></i></div>
         <div id="st-overview"></div>
-        <div class="btnrow"><button data-go="predict">상황도/확산예측</button><button data-go="weather">기상정보</button><button data-go="log">상황기록</button><button data-go="contacts">담당자연락처</button><button data-go="chat" class="decision-only">AI 어시스턴트</button></div>
+        <div class="btnrow"><button data-go="contacts">담당자연락처</button></div>
         <div class="sec">근접 시설<i class="info l" data-tip="발화점에서 각 시설까지 직선 거리. 체크하면 지도에 노란 거리 라벨이 표시됩니다."></i></div>
         <div id="st-prox"></div>
       </div>
@@ -479,7 +473,7 @@
         <div class="pfilters"><button class="pfilter on" data-f="all">전체</button><button class="pfilter" data-f="즉시">즉시</button><button class="pfilter" data-f="대기">대기</button><button class="pfilter" data-f="협의">협의</button><button class="pfilter" data-f="요청">요청</button><i class="info l" data-tip="즉시: 책임자 권한으로 지금 시행 · 대기: 조건 충족 시 시행 · 협의: 산림청장과 협의 · 요청: 타 기관에 요청 · 근거 부족: 매뉴얼에 근거가 없어 수량·방법을 정하지 않음"></i></div>
         <div id="cards"></div>
         <div id="prop-summary"></div>
-        <div id="prop-actions"><button id="btn-chat-open" class="decision-only">AI 어시스턴트</button><button id="btn-report" class="decision-only">현장 보고 입력</button><button id="btn-regenerate" class="primary decision-only">제안 다시 생성</button></div>
+        <div id="prop-actions"><button id="btn-report" class="decision-only">현장 보고 입력</button><button id="btn-regenerate" class="primary decision-only">제안 다시 생성</button></div>
       </div>
 
       <div id="evidence-drawer"><div class="hd"><h3 id="ev-title">근거</h3><button id="btn-ev-close" class="ibtn" style="width:22px;height:22px;padding:0;justify-content:center">✕</button></div><div id="ev-body"></div></div>
@@ -510,7 +504,7 @@
   <!-- 하단 기록 도크 -->
   <div id="bottom-dock">
     <div class="bar">
-      <button style="background:#2f5fb3">시간순 표시</button><button style="background:#2f5fb3" id="bd-actual">실제경과 표시</button><button style="background:#d0342c" id="bd-mock-only">시스템 이벤트만</button><button style="background:#5b7f3a" disabled>엑셀저장</button><button style="background:#888" disabled>전체삭제</button>
+      <button style="background:#2f5fb3" id="bd-actual">실제경과 표시</button><button style="background:#d0342c" id="bd-mock-only">시스템 이벤트만</button>
       <span class="cnt" id="bd-cnt">0 건</span><button class="ibtn" id="bd-close">✕</button>
     </div>
     <div class="tbl"><table class="grid" id="bd-table"></table></div>

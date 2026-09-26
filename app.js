@@ -512,7 +512,7 @@
 
   // ------------------------------------------------------------------ 패널 제어
   function showPanel(id, on) { const p = $(id); p.classList.toggle("on", on == null ? !p.classList.contains("on") : on); syncVtabs(); }
-  function syncVtabs() { $$(".vtab").forEach((v) => v.classList.toggle("on", $({ fire: "#info-panel", weather: "#weather-panel", legend: "#legend-panel" }[v.dataset.v]).classList.contains("on"))); $("#ts-info").classList.toggle("on", $("#info-panel").classList.contains("on")); $("#ts-log").classList.toggle("on", $("#bottom-dock").classList.contains("on")); }
+  function syncVtabs() { $$(".vtab").forEach((v) => v.classList.toggle("on", $({ fire: "#info-panel", weather: "#weather-panel", legend: "#legend-panel" }[v.dataset.v]).classList.contains("on"))); $$(".menu-btn[data-menu=\"log\"]").forEach((b) => b.classList.toggle("on", $("#bottom-dock").classList.contains("on"))); }
   function showTab(tab) {
     if (tab === "chat") { openChatPopup(); return; }
     showPanel("#info-panel", true);
@@ -622,7 +622,9 @@
       <div class="row">${ico("care", "care")}취약시설 <span style="margin-left:6px">${ico("heritage", "heritage")}</span>국가유산·사찰 <span style="margin-left:6px">${ico("crew", "crew")}</span>진화조 <span style="margin-left:6px">${ico("water", "drop")}</span>담수지</div>
       <div class="row"><span class="sw" style="background:#3d8bff"></span>대피로 <span class="sw" style="border:1.5px dashed #555;background:#fff;margin-left:4px"></span>진입로 <span class="sw" style="background:#ff3b3b;opacity:.6;margin-left:4px"></span>겹침 구간</div>
       <div class="row"><span class="sw" style="border-top:2px dotted #c9a000"></span>송전선 <span class="sw" style="border-top:1.5px dashed #999;margin-left:4px"></span>읍면 경계 <span class="sw" style="background:#ffff99;border:1px solid #999;margin-left:4px"></span>거리 라벨</div>
-      <div class="small muted" style="margin-top:6px">위성영상 Esri · 지도 OpenFreeMap © OpenMapTiles © OSM · 지형 AWS</div>`;
+      <div class="small muted" style="margin-top:6px">위성영상 Esri · 지도 OpenFreeMap © OpenMapTiles © OSM · 지형 AWS</div>
+      <div style="margin-top:6px"><a href="#" id="lg-sources">데이터 출처·실제/가상 구분 보기</a></div>`;
+    $("#lg-sources").onclick = (e) => { e.preventDefault(); openSources(); };
   }
   function renderLog() {
     const items = state.events.map((e) => ({ ...e, cls: "mock" }));
@@ -869,8 +871,9 @@
     const lgClock = () => { const n = new Date(); $("#lg-clock").textContent = `${ymd(n)} ${hhmmss(n)}`; }; lgClock(); setInterval(lgClock, 1000);
     $("#chat-fab").onclick = openChatPopup;
     $("#chat-close").onclick = () => { showPanel("#chat-panel", false); $("#chat-fab").style.display = ""; $$(".menu-btn").forEach((b) => b.classList.toggle("on", b.dataset.menu === "proposal" && $("#info-panel").classList.contains("on"))); };
-    $("#btn-chat-open").onclick = openChatPopup;
+
     $("#btn-logout").onclick = logout;
+    $("#lg-sources-link").onclick = (e) => { e.preventDefault(); openSources(); };
     $$(".menu-btn").forEach((b) => (b.onclick = () => menu(b.dataset.menu)));
     $("#btn-alert").onclick = () => { state.alerts = !state.alerts; $("#btn-alert").classList.toggle("on", state.alerts); $("#btn-alert").textContent = (state.alerts ? "✔ " : "") + "알림"; };
     $("#btn-resources").onclick = () => { showPanel("#left-panel"); $("#btn-resources").classList.toggle("on", $("#left-panel").classList.contains("on")); };
@@ -885,10 +888,9 @@
     $("#wp-close").onclick = () => showPanel("#weather-panel", false); $("#lg-close").onclick = () => showPanel("#legend-panel", false);
     $("#ts-zoom-in").onclick = () => map && map.zoomIn(); $("#ts-zoom-out").onclick = () => map && map.zoomOut();
     $("#ts-zoom").oninput = (e) => map && map.setZoom(Number(e.target.value));
-    $("#ts-fit").onclick = () => map && fitAll(); $("#ts-north").onclick = () => map && map.easeTo({ bearing: 0, pitch: state.is3d ? 62 : 0 });
+    $("#ts-fit").onclick = () => map && fitAll(); $("#compass").onclick = () => map && map.easeTo({ bearing: 0, pitch: state.is3d ? 62 : 0 });
     $("#ts-sat").onclick = () => { state.sat = !state.sat; applySat(); };
     $("#ts-3d").onclick = () => map && set3d(!state.is3d);
-    $("#ts-info").onclick = () => showPanel("#info-panel"); $("#ts-log").onclick = () => showPanel("#bottom-dock");
     $("#bd-close").onclick = () => showPanel("#bottom-dock", false);
     $("#bd-actual").onclick = () => { state.showActual = !state.showActual; state.mockOnly = false; renderLog(); };
     $("#bd-mock-only").onclick = () => { state.mockOnly = !state.mockOnly; renderLog(); };
