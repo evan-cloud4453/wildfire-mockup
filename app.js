@@ -303,18 +303,14 @@
   }
 
   // ------------------------------------------------------------------ 위험도 (UC-PRED-02)
+  // 조건위험도 = 25 × (요인 점수(1~5) 가중평균 − 1). 기상 0.35 · 지형 0.30 · 연료 0.25 · 인프라 0.10
   function computeRisk() {
-    const w = S.weather.series[0], RM = S.risk_model, W = RM.weights, night = isNight(T0), f = [];
-    f.push({ name: "풍속", val: `${w.wind_ms} m/s ${dirName(w.wind_dir)}풍`, pts: Math.min(W.wind, w.wind_ms / 12 * W.wind), max: W.wind });
-    f.push({ name: "습도", val: `${w.rh}%`, pts: Math.max(0, Math.min(W.humidity, (60 - w.rh) / 50 * W.humidity)), max: W.humidity });
-    const dry = S.weather.warnings.some((x) => x.includes("건조"));
-    f.push({ name: "건조특보", val: dry ? "발효" : "없음", pts: dry ? W.dryness : 0, max: W.dryness });
-    f.push({ name: "임상(연료)", val: RM.fuel.type, pts: RM.fuel.score, max: W.fuel });
-    f.push({ name: "경사", val: `${RM.slope.deg}°`, pts: Math.min(W.slope, RM.slope.deg / 30 * W.slope), max: W.slope });
-    f.push({ name: "시간대", val: night ? "야간" : "주간(일조)", pts: night ? W.daytime * 0.3 : W.daytime * 0.8, max: W.daytime });
-    const score = Math.round(f.reduce((a, x) => a + x.pts, 0));
+    const RM = S.risk_model, fs = RM.factors;
+    const wsum = fs.reduce((a, f) => a + f.weight, 0);
+    const mean = fs.reduce((a, f) => a + f.score * f.weight, 0) / wsum;
+    const score = Math.round(25 * (mean - 1) * 10) / 10;
     const grade = RM.grades.slice().reverse().find((g) => score >= g.min).name;
-    return { score, grade, factors: f };
+    return { score, grade, mean, factors: fs.map((f) => ({ ...f, contrib: Math.round(f.score * f.weight / wsum * 100) / 100 })), missing: RM.missing_vars || [] };
   }
 
   // ------------------------------------------------------------------ 아이콘 · 지도
@@ -595,8 +591,8 @@
     if (!st.predicted) $("#predict-status").textContent = I.status === "종료" ? "종료된 산불 — 예측 미실행" : `발화점 ${I.ignition[1].toFixed(4)}, ${I.ignition[0].toFixed(4)} · t0 ${hhmm(T0)} · ${dirName(state.wind.dir)}풍 ${state.wind.ms} m/s${actualRing(I) ? ` · 실측 화선 ${fmt1(burnedAreaHa(I))} ha 반영` : " · 실측 화선 없음"}`;
     else $("#predict-status").textContent = `완료(${hhmm(st.predictedAt)}) · 5h ${fmt0(ringAreaHa(st.slices[4]))} ha · 8h ${fmt0(ringAreaHa(st.slices[7]))} ha · 주 방향 ${dirName(state.wind.dir + 180)}${st.stale ? " · 발화 정보가 갱신되어 다시 예측하십시오" : ""}`;
     $("#predict-progress").style.width = st.predicted ? "100%" : "0%";
-    const rk = computeRisk();
-    $("#risk-box").innerHTML = `<div class="risk"><div class="gauge"><div class="v g-${rk.grade}">${rk.score}</div><div class="g g-${rk.grade}">${rk.grade}</div><div class="k">조건위험도 0~100</div></div><div class="fac">${rk.factors.map((f) => `<div class="row"><span>${esc(f.name)}</span><span class="bar"><i style="width:${Math.round(f.pts / f.max * 100)}%"></i></span><span class="n">${Math.round(f.pts)}/${f.max} · ${esc(f.val)}</span></div>`).join("")}</div></div><div class="small muted">기상 ${S.weather.series[0].t} 관측 기준. 등급 구간 낮음 0~50 · 보통 51~65 · 높음 66~85 · 매우높음 86~100. 임상·경사는 시연 가정값.</div>`;
+    const rk = computeRisk(), gcls = rk.grade.replace(/\s/g, "");
+    $("#risk-box").innerHTML = `<div class="risk"><div class="gauge"><div class="v g-${gcls}">${rk.score.toFixed(1)}</div><div class="g g-${gcls}">${rk.grade}</div><div class="k">조건위험도 0~100</div></div><div class="fac">${rk.factors.map((f) => `<div class="row"><span title="${esc(f.vars)}">${esc(f.name)}</span><span class="bar"><i style="width:${Math.round(f.score / 5 * 100)}%"></i></span><span class="n">${f.score.toFixed(1)}/5 · 가중치 ${f.weight.toFixed(2)}</span></div>`).join("")}</div></div><div class="small muted">조건위험도 = 25 × (요인 점수 가중평균 ${rk.mean.toFixed(2)} − 1). 등급 낮음 0~50 · 보통 51~65 · 높음 66~85 · 매우 높음 86~100. 요인 점수는 시연값.${rk.missing.length ? `<br>결측 변수(제외하고 계산): ${esc(rk.missing.join(", "))}` : ""}</div>`;
   }
 
   // ------------------------------------------------------------------ 렌더링: 진화자원 현황(UC-SIT-03)
@@ -716,7 +712,7 @@
   }
   function answer(q) {
     const st = IS(), run = st.viewRun, I = inc(), rs = rsView();
-    if (/위험도|위험 점수|위험 등급/.test(q)) { const rk = computeRisk(); botSay(`발화 지점의 조건위험도는 ${rk.score}점(${rk.grade})입니다. 요인별 기여는 ${rk.factors.map((f) => `${f.name} ${Math.round(f.pts)}/${f.max}(${f.val})`).join(", ")}입니다. 위험도는 매뉴얼 근거가 아닌 시스템 산출값이며, 대응단계 판단은 표준매뉴얼 p.73의 4요소 기준을 따릅니다.`); return; }
+    if (/위험도|위험 점수|위험 등급/.test(q)) { const rk = computeRisk(); botSay(`발화 지점의 조건위험도는 ${rk.score.toFixed(1)}점(${rk.grade})입니다. 요인별 점수는 ${rk.factors.map((f) => `${f.name} ${f.score.toFixed(1)}/5(가중치 ${f.weight.toFixed(2)})`).join(", ")}이며, 25 × (가중평균 ${rk.mean.toFixed(2)} − 1)로 계산했습니다.${rk.missing.length ? ` 결측 변수(${rk.missing.join(", ")})는 제외했습니다.` : ""} 위험도는 매뉴얼 근거가 아닌 시스템 산출값이며, 대응단계 판단은 표준매뉴얼 p.73의 4요소 기준을 따릅니다.`); return; }
     if (!run) { botSay("아직 대응 제안이 없습니다. 예측을 실행하면 답할 수 있습니다."); return; }
     const R = run.R, ctx = state.chatCtx, es = I.evacuation_state;
     const vill = S.villages.find((v) => q.includes(v.name));
