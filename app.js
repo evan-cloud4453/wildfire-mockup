@@ -152,7 +152,7 @@
 
   // ------------------------------------------------------------------ 규칙 판정
   const STAGES = S.stage_rules.area_ha.map((r) => r.stage);
-  const stageByArea = (ha) => { for (const r of S.stage_rules.area_ha) if ((r.min == null || ha >= r.min) && (r.max == null || ha < r.max)) return r.stage; return STAGES[0]; };
+  const stageByRange = (rules, v) => { for (const r of rules) if ((r.min == null || v >= r.min) && (r.max == null || v < r.max)) return r.stage; return STAGES[0]; };
   const stageIdx = (s) => Math.max(0, STAGES.indexOf(s));
   const burnedAreaHa = (i = inc()) => (actualRing(i) ? ringAreaHa(actualRing(i)) : 0);
   function computeRules(I, slices) {
@@ -185,7 +185,17 @@
     R.routeInFire = conflict ? firstSlice(slices, (ring) => lineHitsRing(conflict.coords, ring)) : null;
     R.crewIn5 = rs.crew_positions.filter((p) => pointInRing(p, P5)).length;
     R.crewTotal = rs.crew_positions.length;
-    R.recStage = stageByArea(R.areaP5);
+    // 대응단계 4요소 판정(p.73): 예상 피해면적·평균풍속·예상 진화시간·시설피해 중 가장 높은 단계. 예상 진화시간은 상황 정정 값, 없으면 제외
+    const SR = S.stage_rules, hrs = I.field_report.expected_suppression_hours;
+    R.facMajor = R.heritageIn5.length + R.careIn.filter((f) => f.arrival <= 5).length;
+    R.stageFactors = [
+      { name: "예상 피해면적(5h)", val: `${fmt1(R.areaP5)} ha`, stage: stageByRange(SR.area_ha, R.areaP5) },
+      { name: "평균풍속", val: `${fmt1(R.avgWind)} m/s`, stage: stageByRange(SR.wind_ms, R.avgWind) },
+      { name: "예상 진화시간", val: hrs == null ? "미입력" : `${hrs}시간`, stage: hrs == null ? null : stageByRange(SR.hours, hrs) },
+      { name: "시설피해 우려", val: `주택 ${R.housesP5}동·주요시설 ${R.facMajor}동`, stage: R.facMajor >= SR.facility.stage2_major || R.housesP5 >= SR.facility.stage2_houses ? STAGES[2] : R.housesP5 >= SR.facility.stage1_houses ? STAGES[1] : STAGES[0] }
+    ];
+    R.recStage = R.stageFactors.reduce((best, f) => (f.stage && stageIdx(f.stage) > stageIdx(best) ? f.stage : best), STAGES[0]);
+    R.stageDrivers = R.stageFactors.filter((f) => f.stage === R.recStage).map((f) => f.name);
     R.official = I.official_stage;
     R.stageUp = stageIdx(R.recStage) > stageIdx(R.official);
     R.outOfScope = stageIdx(R.official) >= 2;
@@ -214,9 +224,9 @@
     const none = (id) => ({ id, finding: "", status: ["(없음)"], text: "(없음)", targets: [], conflicts: [], evidence: [] });
     const cat = Object.fromEntries(S.catalog.map((c) => [c.id, c]));
     const push = (b) => { const c = cat[b.id]; B.push({ axis: c.axis, name: c.name, authority: c.authority, targets: [], conflicts: [], ...b }); };
-    { const facCount = R.heritageIn5.length + R.careIn.filter((f) => f.arrival <= 5).length;
-      const finding = `현재 피해면적 ${R.areaNow ? fmt1(R.areaNow) + " ha(실측 화선)" : "미입력"} / 5시간 후 예상 ${fmt1(R.areaP5)} ha → ${R.recStage} 기준 / 평균풍속 ${fmt1(R.avgWind)} m/s(기준값 미적용) / 시설피해 우려 주택 ${R.housesP5}동·주요시설 ${facCount}동 / 예상 진화시간 ${fr.expected_suppression_hours == null ? "미입력" : fr.expected_suppression_hours + "시간"} → 규칙 판정 ${R.recStage}, 공식 ${R.official}`;
-      if (R.stageUp) { let text = `5시간 후 예상 피해면적 ${fmt1(R.areaP5)} ha는 ${R.recStage} 기준(${R.recStage === "확산대응 2단계" ? "100 ha 이상" : "10 ha 이상 100 ha 미만"})에 해당합니다 [1]. 산림청장과 대응단계 격상을 협의하십시오 [2].`; if (R.nextHolder) text += ` 격상되면 지휘권이 ${R.nextHolder}에게 넘어가므로 피해상황·투입 자원·추가 피해 가능성을 인계할 준비를 하십시오 [3].`; push({ id: "S1", finding, status: ["협의"], text, targets: ["산림청장"], evidence: E(["SM-p073", "SM-p022", "SM-p072"]) }); }
+    { const drivers = R.stageDrivers.join("·");
+      const finding = `현재 피해면적 ${R.areaNow ? fmt1(R.areaNow) + " ha(실측 화선)" : "미입력"} / 4요소 판정: ${R.stageFactors.map((f) => `${f.name} ${f.val} → ${f.stage || "판정 제외"}`).join(" / ")} → 가장 높은 단계 ${R.recStage}(${drivers}), 공식 ${R.official}`;
+      if (R.stageUp) { let text = `대응단계 판단기준 4요소 중 ${drivers}${hasBatchim(drivers) ? "이" : "가"} ${R.recStage} 기준(${R.recStage === "확산대응 2단계" ? "피해면적 100 ha 이상·평균풍속 7 m/s 이상·예상 진화시간 24시간 이상·주요시설 피해 우려" : "피해면적 10 ha 이상·평균풍속 4 m/s 이상·예상 진화시간 8시간 이상·주택 피해 우려"})에 해당합니다 [1]. 산림청장과 대응단계 격상을 협의하십시오 [2].`; if (R.nextHolder) text += ` 격상되면 지휘권이 ${R.nextHolder}에게 넘어가므로 피해상황·투입 자원·추가 피해 가능성을 인계할 준비를 하십시오 [3].`; push({ id: "S1", finding, status: ["협의"], text, targets: ["산림청장"], evidence: E(["SM-p073", "SM-p022", "SM-p072"]) }); }
       else push({ ...none("S1"), finding, evidence: E(["SM-p073"]) }); }
     { const g1 = [...R.immediate.map((v) => v.name), ...R.careIn.filter((f) => f.arrival <= 5).map((f) => f.name)];
       const g2 = [...R.heritageIn5.map((f) => f.name), ...(R.powerIn && R.powerIn <= 5 ? [`송전선(P${R.powerIn})`] : [])];
@@ -624,7 +634,7 @@
     $("#prop-meta").innerHTML = run ? `기준 <b>${hhmm(T0)}</b> · 공식 <b>${esc(run.snapshot.official_stage)}</b> · 판정 <b>${esc(run.R.recStage)}</b> · <b>${run.id}</b>(${esc(run.reason)}, ${hhmm(run.createdAt)})${isCurrent ? "" : ' <span class="badge b-없음">이전 판</span> <a href="#" id="prop-latest">최신 판으로</a>'}` : "예측 실행 후 생성됩니다";
     const pl = $("#prop-latest"); if (pl) pl.onclick = (e) => { e.preventDefault(); st.viewRun = st.currentRun; renderAll(); };
     const banner = $("#stage-banner");
-    if (run && run.R.stageUp) { banner.classList.add("on"); banner.innerHTML = `<b>격상 검토 권고</b> — 5시간 후 예상 피해면적 ${fmt0(run.R.areaP5)} ha는 ${esc(run.R.recStage)} 기준입니다. 산림청장과 협의하십시오.${run.R.nextHolder ? ` 격상 시 지휘권자는 <b>${esc(run.R.nextHolder)}</b>, 주민대피 명령권은 시장·군수·구청장에게 남습니다.` : ""}${tip("판단기준 4요소(피해면적·평균풍속·예상 진화시간·시설피해, 표준매뉴얼 p.73) 중 면적 기준만 적용한 판정입니다. 발령은 산림청장이 통합지휘본부와 협의해 결정하며, 이 화면은 권고만 합니다.", "l")}`; }
+    if (run && run.R.stageUp) { banner.classList.add("on"); banner.innerHTML = `<b>격상 검토 권고</b> — 4요소 중 ${esc(run.R.stageDrivers.join("·"))}이(가) ${esc(run.R.recStage)} 기준입니다. 산림청장과 협의하십시오.${run.R.nextHolder ? ` 격상 시 지휘권자는 <b>${esc(run.R.nextHolder)}</b>, 주민대피 명령권은 시장·군수·구청장에게 남습니다.` : ""}${tip("판단기준 4요소(예상 피해면적·평균풍속·예상 진화시간·시설피해, 표준매뉴얼 p.73) 중 가장 높은 단계로 판정합니다. 예상 진화시간은 상황 정정으로 입력한 값이며 없으면 제외합니다. 구간값은 시행령 별표 기준을 2026 체계에 대응시킨 목업 근사값이고, 발령은 산림청장이 통합지휘본부와 협의해 결정하며 이 화면은 권고만 합니다.", "l")}`; }
     else banner.classList.remove("on");
     const box = $("#cards");
     if (!run) { box.innerHTML = `<div class="muted" style="padding:18px 6px;text-align:center">${canOperate() ? "「확산예측」 탭에서 예측을 실행하면<br>진화·대피 대응 제안이 생성됩니다." : "통합지휘권자가 예측을 실행하면 표시됩니다."}</div>`; $("#prop-summary").innerHTML = ""; return; }
@@ -720,7 +730,7 @@
       [/왜|먼저|순서|우선/, () => { const first = R.ordered[0]; const v = vill && R.villages.find((x) => x.id === vill.id) || first; if (!v || !v.arrival) return "확산 범위에 드는 마을이 없어 대피 순서를 정할 항목이 없습니다."; const rank = R.ordered.findIndex((x) => x.id === v.id) + 1; return `${eun(v.name)} 화선 도달 예상이 ${v.arrivalTime}로 ${rank === 1 ? "가장 이르고" : `${rank}번째이며`}, 고령자 ${v.elderly}명이 있어 안전취약계층 우선 대피 원칙이 적용됩니다 [1]. 대피명령은 마을 단위로 내리고 화선 도달 5시간 이내 마을은 즉시 실행합니다 [2].`; }, "E2"],
       [/대피소|수용|초과|분산/, () => { const ov = R.overflow; const as = R.assignments.map((a) => `${a.village.name}→${a.shelter.name}(${a.shelter.load}/${a.shelter.capacity})`).join(", "); return `현재 배정은 ${as || "없음"}입니다 [1]. ${ov.length ? `${eun(joinKo(ov.map((s) => s.name)))} 수용 인원을 초과하므로 인접 대피소로 분산해야 합니다 [1].` : "수용 초과 대피소는 없습니다."} 8시간 확산 범위 안 대피소는 제외합니다 [2].`; }, "E4"],
       [/헬기|몇 대|대수|추가 투입/, () => `가용 진화헬기를 집중 투입하라는 원칙은 있으나 [2], 몇 대를 추가해야 하는지의 산정 기준은 제공된 청크에 없어 근거 부족입니다. 현재 투입 ${rs.heli_deployed}대, 대기 ${rs.heli_available}대이며, 풍속 ${state.wind.ms} m/s에서는 운용이 가능합니다.`, "S3"],
-      [/격상|단계|기준/, () => `대응단계 판단기준은 피해면적·평균풍속·예상 진화시간·시설피해 4요소이며 하나라도 상위 기준을 충족하면 상위 단계를 검토합니다 [1]. 현재 5시간 후 예상 피해면적 ${fmt0(R.areaP5)} ha는 ${R.recStage} 기준입니다. 발령은 산림청장이 통합지휘본부와 협의해 하므로 이 화면은 격상 검토를 권고할 뿐입니다 [2].`, "S1"],
+      [/격상|단계|기준/, () => `대응단계 판단기준은 피해면적·평균풍속·예상 진화시간·시설피해 4요소이며 하나라도 상위 기준을 충족하면 상위 단계를 검토합니다 [1]. 현재 4요소는 ${R.stageFactors.map((f) => `${f.name} ${f.val}(${f.stage || "판정 제외"})`).join(", ")}이고, 가장 높은 단계인 ${R.recStage}로 판정합니다. 발령은 산림청장이 통합지휘본부와 협의해 하므로 이 화면은 격상 검토를 권고할 뿐입니다 [2].`, "S1"],
       [/야간|일몰|밤|사전대피/, () => `일몰은 ${R.sunset}이고 ${R.nightVillages.length ? `${eun(joinKo(R.nightVillages.map((v) => `${v.name}(${v.arrivalTime})`)))} 화선 도달 예상 시각이 일몰 이후이므로 일몰 전 사전대피 대상입니다 [1].` : "화선 도달 예상 시각이 일몰 이후인 마을은 없습니다."} 야간에는 풍속이 잦아드는 시간대에 집중 진화를 합니다.`, "E2"],
       [/송전|한전|전류|고압/, () => R.powerIn ? `송전선이 ${timeAt(R.powerIn)} 무렵 확산 범위에 들므로 한전에 전류 차단과 우회선로 확보를 요청해야 합니다 [2]. 요청 대상은 한전이며 통합지휘본부에 협력관 파견을 받습니다.` : "8시간 확산 범위 안에 송전선이 없어 한전 요청 항목은 발동하지 않았습니다.", "S5"],
       [/재난문자|문자|방송|CBS|송출/, () => `긴급재난문자와 자막방송은 산불 발생, 대피 권고, 대피 명령 시 단계별로 송출합니다 [1]. 현재 대피명령 ${es.order_issued ? "발령 상태이므로 대피 명령 단계로" : "미발령이므로 명령과 동시에 명령 단계로"} ${joinKo(R.emdIn8)}에 송출하십시오. 송출 이력은 ${es.cbs_sent.length ? es.cbs_sent.join(", ") : "없음"}입니다.`, "E6"],
