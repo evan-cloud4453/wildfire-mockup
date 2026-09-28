@@ -502,7 +502,7 @@
     if (I.status === "종료") { toast("종료된 산불에는 예측을 실행하지 않습니다."); return; }
     pause();
     const btn = $("#btn-predict"), bar = $("#predict-progress"), sl = $("#predict-status");
-    btn.disabled = true; let p = 0;
+    btn.disabled = true; state.predicting = true; let p = 0;
     const steps = ["입력 검증(발화점·t0·실측 화선)", "기상 자료 조회", "확산 모델 실행", "시간대별 결과 검증", "규칙 판정·제안 생성"];
     const tick = () => {
       p += auto ? 34 : 9; bar.style.width = Math.min(100, p) + "%"; sl.textContent = steps[Math.min(steps.length - 1, Math.floor(p / 21))] + "…";
@@ -510,7 +510,7 @@
       else {
         state.wind = { ms: S.weather.series[0].wind_ms, dir: S.weather.series[0].wind_dir };
         st.slices = buildSlices(I.ignition, state.wind, actualRing(I)); st.predicted = true; st.stale = false; st.predictedAt = nowSim();
-        btn.disabled = false;
+        btn.disabled = false; state.predicting = false;
         addEvent("예측", `확산 예측 갱신 — 5h ${fmt0(ringAreaHa(st.slices[4]))} ha, 8h ${fmt0(ringAreaHa(st.slices[7]))} ha, 주 방향 ${dirName(state.wind.dir + 180)}`);
         setT(0); generateProposal("예측 갱신");
         if (!auto) { toast("예측이 끝나 진화·대피 대응 제안이 생성되었습니다."); fitAll(); }
@@ -569,7 +569,8 @@
   }
   function incidentListHTML(showEnded, selId, onSelect) {
     const list = S.incidents.filter((i) => showEnded || i.status !== "종료" || i.id === selId);
-    return `<table class="grid"><thead><tr><th>산불</th><th style="width:78px">접수</th><th style="width:60px">상태</th></tr></thead><tbody>${list.map((i) => `<tr class="clickable ${i.id === selId ? "sel" : ""}" data-inc="${i.id}"><td><b>${esc(i.name)}</b><br><span class="small muted">${esc(i.addr)}</span></td><td class="num small">${esc(ymdhm(new Date(i.report_time)).slice(5))}</td><td style="text-align:center">${stBadge(i.status)}</td></tr>`).join("")}</tbody></table>${list.length ? "" : '<div class="muted small" style="padding:6px">표시할 산불이 없습니다.</div>'}`;
+    const ongoing = S.incidents.filter((i) => i.status !== "종료").length;
+    return (ongoing ? "" : '<div class="muted small" style="padding:6px 4px;border:1px dashed #ccc;margin-bottom:4px;text-align:center">진행 중인 산불이 없습니다.</div>') + `<table class="grid"><thead><tr><th>산불</th><th style="width:78px">접수</th><th style="width:60px">상태</th></tr></thead><tbody>${list.map((i) => `<tr class="clickable ${i.id === selId ? "sel" : ""}" data-inc="${i.id}"><td><b>${esc(i.name)}</b><br><span class="small muted">${esc(i.addr)}</span></td><td class="num small">${esc(ymdhm(new Date(i.report_time)).slice(5))}</td><td style="text-align:center">${stBadge(i.status)}</td></tr>`).join("")}</tbody></table>${list.length || !ongoing ? "" : '<div class="muted small" style="padding:6px">표시할 산불이 없습니다.</div>'}`;
   }
   function renderStatus() {
     const I = inc(), st = IS();
@@ -591,6 +592,7 @@
   }
   function openEndModal() {
     const I = inc();
+    if (state.predicting) { toast("실행이 끝난 뒤 종료할 수 있습니다."); return; }
     openModal("발화 종료 처리", `<p><b>${esc(I.name)}</b>을(를) 진화 완료로 보고 <b>종료</b> 상태로 전환합니다.</p><table class="grid"><tr><td class="k">종료 시각</td><td>${ymdhm(nowSim())}</td></tr><tr><td class="k">진화율</td><td>${I.field_report.containment_pct}% → 100%</td></tr><tr><td class="k">영향</td><td>예측 실행·상황 정정이 중단되고 제안은 이력으로만 열람됩니다. 산불 목록에서는 「종료 포함」을 켜야 보입니다.</td></tr></table>`,
       [{ label: "취소" }, { label: "종료 처리", cls: "primary", onClick: () => { I.status = "종료"; I.ended_at = nowSim().toISOString(); I.field_report.containment_pct = 100; pause(); addEvent("종료", `${I.name} 종료 처리(진화 완료)`); toast("종료 상태로 전환했습니다."); renderAll(); } }]);
   }
