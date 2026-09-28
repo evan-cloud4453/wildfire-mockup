@@ -1,135 +1,151 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1460" height="980" viewBox="0 0 1460 980" font-family="Malgun Gothic, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif">
-<defs><marker id="arr" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#333" stroke-width="1.6"/></marker></defs>
-<rect x="0" y="0" width="1460" height="980" fill="#ffffff"/>
-<rect x="270" y="60" width="960" height="880" rx="6" fill="#f7f9fc" stroke="#555" stroke-width="1.8"/>
-<text x="750" y="96" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">산불 대응 지휘 지원시스템</text>
-<line x1="164.0" y1="330.0" x2="398.2" y2="199.0" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="330.0" x2="365.7" y2="379.4" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="330.0" x2="419.8" y2="598.3" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="330.0" x2="432.4" y2="827.4" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="640.0" x2="430.3" y2="202.4" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="640.0" x2="413.0" y2="431.0" stroke="#333" stroke-width="1.6"/>
-<line x1="164.0" y1="640.0" x2="342.7" y2="633.8" stroke="#333" stroke-width="1.6"/>
-<line x1="1262.0" y1="600.0" x2="854.5" y2="531.0" stroke="#333" stroke-width="1.6"/>
-<polyline points="1340,155 1340,458 800,458 782.6,482.7" fill="none" stroke="#333" stroke-width="1.6"/>
-<polyline points="1262,120 600,118 600,400 558.0,400.0" fill="none" stroke="#333" stroke-width="1.6"/>
-<line x1="718.9" y1="200.5" x2="491.1" y2="369.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="274.0" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="288.0" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="691.3" y1="310.5" x2="518.7" y2="374.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="331.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="345.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="652.0" y1="400.0" x2="558.0" y2="400.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="379.0" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="393.0" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="691.3" y1="489.5" x2="518.7" y2="425.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="446.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="460.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="450.0" y1="318.0" x2="450.0" y2="367.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="464.0" y="331.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="512.0" y="345.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="450.0" y1="482.0" x2="450.0" y2="433.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="464.0" y="446.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="512.0" y="460.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="1028.9" y1="315.5" x2="801.1" y2="484.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="912.5" y="355.2" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="960.5" y="369.2" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="652.0" y1="630.0" x2="558.0" y2="630.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="609.0" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="623.0" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="691.3" y1="719.5" x2="518.7" y2="655.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="676.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="690.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="977.7" y1="727.9" x2="542.3" y2="647.1" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="712.0" y="676.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="760.0" y="690.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="691.3" y1="770.5" x2="518.7" y2="834.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="557.0" y="791.5" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="605.0" y="805.5" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="962.0" y1="860.0" x2="558.0" y2="860.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="712.0" y="839.0" width="96" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="760.0" y="853.0" text-anchor="middle" font-size="13" fill="#333">«extend»</text>
-<line x1="828.7" y1="425.5" x2="1001.3" y2="489.5" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="818.3" y="430.5" width="107" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="871.8" y="444.5" text-anchor="middle" font-size="13" fill="#333">«include»</text>
-<line x1="868.0" y1="515.0" x2="962.0" y2="515.0" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="861.5" y="518.0" width="107" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="915.0" y="532.0" text-anchor="middle" font-size="13" fill="#333">«include»</text>
-<polyline points="1178,860 1205,860 1205,515 1179,515" fill="none" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<rect x="1151.5" y="676.5" width="107" height="18" fill="#ffffff" fill-opacity="0.95"/>
-<text x="1205.0" y="690.5" text-anchor="middle" font-size="13" fill="#333">«include»</text>
-<ellipse cx="450" cy="170" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="166" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-01</text>
-<text x="450" y="183" text-anchor="middle" font-size="12.5" fill="#222">로그인한다</text>
-<ellipse cx="450" cy="285" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="281" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-15</text>
-<text x="450" y="298" text-anchor="middle" font-size="12.5" fill="#222">상황기록을 본다</text>
-<ellipse cx="450" cy="400" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="396" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-02</text>
-<text x="450" y="413" text-anchor="middle" font-size="12.5" fill="#222">상황판을 본다</text>
-<ellipse cx="450" cy="515" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="511" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-16</text>
-<text x="450" y="528" text-anchor="middle" font-size="12.5" fill="#222">진화자원 현황을 본다</text>
-<ellipse cx="450" cy="630" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="626" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-09</text>
-<text x="450" y="643" text-anchor="middle" font-size="12.5" fill="#222">대응 제안을 열람한다</text>
-<ellipse cx="450" cy="860" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="450" y="856" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-13</text>
-<text x="450" y="873" text-anchor="middle" font-size="12.5" fill="#222">AI 어시스턴트에 질의한다</text>
-<ellipse cx="760" cy="170" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="166" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-05</text>
-<text x="760" y="183" text-anchor="middle" font-size="12.5" fill="#222">화선 전개를 재생한다</text>
-<ellipse cx="760" cy="285" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="281" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-06</text>
-<text x="760" y="298" text-anchor="middle" font-size="12.5" fill="#222">예측 결과 요약을 본다</text>
-<ellipse cx="760" cy="400" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="396" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-03</text>
-<text x="760" y="413" text-anchor="middle" font-size="12.5" fill="#222">현장 보고를 입력한다</text>
-<ellipse cx="760" cy="515" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="511" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-04</text>
-<text x="760" y="528" text-anchor="middle" font-size="12.5" fill="#222">확산 예측을 실행한다</text>
-<ellipse cx="760" cy="630" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="626" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-11</text>
-<text x="760" y="643" text-anchor="middle" font-size="12.5" fill="#222">제안 항목을 지도에서 확인한다</text>
-<ellipse cx="760" cy="745" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="760" y="741" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-10</text>
-<text x="760" y="758" text-anchor="middle" font-size="12.5" fill="#222">근거를 열람한다</text>
-<ellipse cx="1070" cy="285" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="1070" y="281" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-07</text>
-<text x="1070" y="298" text-anchor="middle" font-size="12.5" fill="#222">조건 변경 시뮬레이션을 한다</text>
-<ellipse cx="1070" cy="515" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="1070" y="511" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-08</text>
-<text x="1070" y="528" text-anchor="middle" font-size="12.5" fill="#222">대응 제안을 생성한다</text>
-<ellipse cx="1070" cy="745" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="1070" y="741" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-12</text>
-<text x="1070" y="758" text-anchor="middle" font-size="12.5" fill="#222">제안 항목을 채택·보류한다</text>
-<ellipse cx="1070" cy="860" rx="108" ry="33" fill="#ffffff" stroke="#2b4c7e" stroke-width="1.8"/>
-<text x="1070" y="856" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4c7e">UC-14</text>
-<text x="1070" y="873" text-anchor="middle" font-size="12.5" fill="#222">상황을 정정한다</text>
-<circle cx="140" cy="288" r="14" fill="#fff" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="302" x2="140" y2="342" stroke="#333" stroke-width="1.8"/>
-<line x1="118" y1="318" x2="162" y2="318" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="342" x2="122" y2="370" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="342" x2="158" y2="370" stroke="#333" stroke-width="1.8"/>
-<text x="140" y="390" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">의사결정권자 (A1)</text>
-<text x="140" y="407" text-anchor="middle" font-size="11.5" font-weight="normal" fill="#555">의성군수 · 통합지휘본부장</text>
-<circle cx="140" cy="598" r="14" fill="#fff" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="612" x2="140" y2="652" stroke="#333" stroke-width="1.8"/>
-<line x1="118" y1="628" x2="162" y2="628" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="652" x2="122" y2="680" stroke="#333" stroke-width="1.8"/>
-<line x1="140" y1="652" x2="158" y2="680" stroke="#333" stroke-width="1.8"/>
-<text x="140" y="700" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">열람자 (A2)</text>
-<text x="140" y="717" text-anchor="middle" font-size="11.5" font-weight="normal" fill="#555">유관기관 등, 읽기 전용</text>
-<rect x="1262" y="565" width="156" height="70" rx="4" fill="#fff" stroke="#333" stroke-width="1.8"/>
-<text x="1340" y="588" text-anchor="middle" font-size="12" fill="#666">«system»</text>
-<text x="1340" y="608" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">확산예측 모듈 (S1)</text>
-<rect x="1262" y="85" width="156" height="70" rx="4" fill="#fff" stroke="#333" stroke-width="1.8"/>
-<text x="1340" y="108" text-anchor="middle" font-size="12" fill="#666">«system»</text>
-<text x="1340" y="128" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">외부 데이터 (S2)</text>
-<text x="1340" y="146" text-anchor="middle" font-size="11" fill="#555">기상·지도·OSM·SGIS</text>
-<line x1="290" y1="905" x2="340" y2="905" stroke="#333" stroke-width="1.6"/>
-<text x="348" y="909" font-size="12" fill="#333">연관(액터–유스케이스)</text>
-<line x1="520" y1="905" x2="570" y2="905" stroke="#333" stroke-width="1.6" stroke-dasharray="7,5" marker-end="url(#arr)"/>
-<text x="578" y="909" font-size="12" fill="#333">«include» 기본 → 포함 유스케이스 / «extend» 확장 → 기본 유스케이스 · 로그인은 모든 유스케이스의 선행조건</text>
-<text x="1225" y="960" text-anchor="end" font-size="11" fill="#777">2026-09-26 · 시연 목업(2025-03-22 의성 산불) 화면 기준</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1040" viewBox="0 0 1560 1040" font-family="Malgun Gothic, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif">
+<defs><marker id="arr" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#333" stroke-width="1.6"/></marker><marker id="arrg" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#8a8a8a" stroke-width="1.4"/></marker></defs>
+<rect x="0" y="0" width="1560" height="1040" fill="#ffffff"/>
+<rect x="300" y="60" width="1000" height="940" rx="6" fill="#f7f9fc" stroke="#555" stroke-width="1.8"/>
+<text x="800.0" y="94" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">산불 대응 지휘 지원시스템</text>
+<rect x="318" y="740" width="320" height="230" rx="6" fill="none" stroke="#999" stroke-dasharray="6 4"/>
+<text x="330" y="762" font-size="13" fill="#666">평시(운영) 유스케이스</text>
+<text x="330" y="94" font-size="13" fill="#666">재난 시 유스케이스</text>
+<line x1="186" y1="200" x2="371.1" y2="158.5" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="200" x2="361.7" y2="226.5" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="200" x2="405.1" y2="311.6" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="434.2" y2="172.4" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="385.6" y2="363.7" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="352.7" y2="436.3" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="405.1" y2="541.6" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="717.2" y2="264.2" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="689.5" y2="371.9" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="689.5" y2="488.1" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="712.6" y2="577.1" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="430" x2="741.8" y2="730.4" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="640" x2="448.6" y2="173.4" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="640" x2="376.0" y2="590.6" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="640" x2="705.5" y2="520.4" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="640" x2="684.6" y2="607.1" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="860" x2="455.0" y2="173.7" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="860" x2="371.1" y2="818.5" stroke="#333" stroke-width="1.4"/>
+<line x1="186" y1="860" x2="361.7" y2="886.5" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="300" x2="912.0" y2="349.3" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="640" x2="864.2" y2="388.5" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="640" x2="898.4" y2="741.3" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="640" x2="1168.1" y2="809.0" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="430" x2="575.3" y2="554.6" stroke="#333" stroke-width="1.4"/>
+<line x1="1394" y1="430" x2="881.5" y2="264.6" stroke="#333" stroke-width="1.4"/>
+<line x1="543.3" y1="266.6" x2="726.7" y2="333.4" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arrg)"/>
+<rect x="591.0" y="291.0" width="88" height="16" fill="#f7f9fc"/>
+<text x="635.0" y="304.0" text-anchor="middle" font-size="11" fill="#777">발화점·실측 화선</text>
+<line x1="470.0" y1="766.0" x2="470.0" y2="174.0" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arrg)"/>
+<rect x="426.0" y="461.0" width="88" height="16" fill="#f7f9fc"/>
+<text x="470.0" y="474.0" text-anchor="middle" font-size="11" fill="#777">계정 공급</text>
+<line x1="470.0" y1="866.0" x2="470.0" y2="604.0" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arrg)"/>
+<rect x="426.0" y="726.0" width="88" height="16" fill="#f7f9fc"/>
+<text x="470.0" y="739.0" text-anchor="middle" font-size="11" fill="#777">자원 데이터</text>
+<line x1="1120.0" y1="806.0" x2="1120.0" y2="694.0" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arrg)"/>
+<rect x="1076.0" y="741.0" width="88" height="16" fill="#f7f9fc"/>
+<text x="1120.0" y="754.0" text-anchor="middle" font-size="11" fill="#777">새 판 기록</text>
+<line x1="1007.8" y1="519.5" x2="912.2" y2="510.5" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="506.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="519.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<line x1="1026.0" y1="550.6" x2="894.0" y2="579.4" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="556.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="569.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<line x1="1076.1" y1="561.6" x2="843.9" y2="728.4" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="636.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="649.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<line x1="1061.1" y1="630.5" x2="858.9" y2="529.5" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="571.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="584.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<line x1="1021.1" y1="641.5" x2="898.9" y2="618.5" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="621.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="634.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<line x1="1030.9" y1="817.7" x2="889.1" y2="782.3" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+<rect x="926.0" y="791.0" width="68" height="16" fill="#f7f9fc"/>
+<text x="960.0" y="804.0" text-anchor="middle" font-size="12" fill="#333">«extend»</text>
+<ellipse cx="470" cy="140" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="135" text-anchor="middle" font-size="12" fill="#666">UC-AUTH-01</text>
+<text x="470" y="154" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">로그인</text>
+<ellipse cx="470" cy="240" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="235" text-anchor="middle" font-size="12" fill="#666">UC-INPUT-01</text>
+<text x="470" y="254" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">현재 산불 발화 정보 입력</text>
+<ellipse cx="470" cy="340" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="335" text-anchor="middle" font-size="12" fill="#666">UC-SIT-02</text>
+<text x="470" y="354" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">산불 발생·접수 정보 조회</text>
+<ellipse cx="470" cy="440" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="435" text-anchor="middle" font-size="12" fill="#666">UC-SIT-01</text>
+<text x="470" y="454" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">발화 종료 처리</text>
+<ellipse cx="470" cy="570" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="565" text-anchor="middle" font-size="12" fill="#666">UC-SIT-03</text>
+<text x="470" y="584" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">통합 상황도 조회</text>
+<ellipse cx="470" cy="800" rx="118" ry="34" fill="#f4f4f4" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="795" text-anchor="middle" font-size="12" fill="#666">UC-ADMIN-01</text>
+<text x="470" y="814" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">계정·권한 관리</text>
+<ellipse cx="470" cy="900" rx="118" ry="34" fill="#f4f4f4" stroke="#333" stroke-width="1.6"/>
+<text x="470" y="895" text-anchor="middle" font-size="12" fill="#666">UC-ADMIN-02</text>
+<text x="470" y="914" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">진화자원 정보 관리</text>
+<ellipse cx="800" cy="240" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="800" y="235" text-anchor="middle" font-size="12" fill="#666">UC-PRED-02</text>
+<text x="800" y="254" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">산불 위험도 확인</text>
+<ellipse cx="800" cy="360" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="800" y="355" text-anchor="middle" font-size="12" fill="#666">UC-PRED-01</text>
+<text x="800" y="374" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">확산 예측 실행·갱신 → 제안 생성</text>
+<ellipse cx="800" cy="500" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="800" y="495" text-anchor="middle" font-size="12" fill="#666">UC-PROP-01</text>
+<text x="800" y="514" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">진화 제안 열람 (S1~S7)</text>
+<ellipse cx="800" cy="600" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="800" y="595" text-anchor="middle" font-size="12" fill="#666">UC-PROP-02</text>
+<text x="800" y="614" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">대피 제안 열람 (E1~E7)</text>
+<ellipse cx="800" cy="760" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="800" y="755" text-anchor="middle" font-size="12" fill="#666">UC-QA-01</text>
+<text x="800" y="774" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">AI 질의응답</text>
+<ellipse cx="1120" cy="530" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1120" y="525" text-anchor="middle" font-size="12" fill="#666">UC-PROP-03</text>
+<text x="1120" y="544" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">근거 조회</text>
+<ellipse cx="1120" cy="660" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1120" y="655" text-anchor="middle" font-size="12" fill="#666">UC-PROP-04</text>
+<text x="1120" y="674" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">제안 이력·변경사항 조회</text>
+<ellipse cx="1120" cy="840" rx="118" ry="34" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1120" y="835" text-anchor="middle" font-size="12" fill="#666">UC-QA-02</text>
+<text x="1120" y="854" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#222">AI 상황 정정 요청</text>
+<circle cx="150" cy="166" r="12" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="178" x2="150" y2="214" stroke="#333" stroke-width="1.6"/>
+<line x1="130" y1="192" x2="170" y2="192" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="214" x2="134" y2="240" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="214" x2="166" y2="240" stroke="#333" stroke-width="1.6"/>
+<text x="150" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">상황 보고자</text>
+<circle cx="150" cy="396" r="12" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="408" x2="150" y2="444" stroke="#333" stroke-width="1.6"/>
+<line x1="130" y1="422" x2="170" y2="422" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="444" x2="134" y2="470" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="444" x2="166" y2="470" stroke="#333" stroke-width="1.6"/>
+<text x="150" y="492" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">통합지휘권자</text>
+<circle cx="150" cy="606" r="12" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="618" x2="150" y2="654" stroke="#333" stroke-width="1.6"/>
+<line x1="130" y1="632" x2="170" y2="632" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="654" x2="134" y2="680" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="654" x2="166" y2="680" stroke="#333" stroke-width="1.6"/>
+<text x="150" y="702" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">열람자</text>
+<circle cx="150" cy="826" r="12" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="838" x2="150" y2="874" stroke="#333" stroke-width="1.6"/>
+<line x1="130" y1="852" x2="170" y2="852" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="874" x2="134" y2="900" stroke="#333" stroke-width="1.6"/>
+<line x1="150" y1="874" x2="166" y2="900" stroke="#333" stroke-width="1.6"/>
+<text x="150" y="922" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">전산 관리자</text>
+<rect x="1396" y="270" width="68" height="60" rx="6" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1430" y="292" text-anchor="middle" font-size="11" fill="#666">«system»</text>
+<text x="1430" y="312" text-anchor="middle" font-size="11" fill="#333">액터</text>
+<text x="1430" y="362" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">확산예측 모듈</text>
+<rect x="1396" y="610" width="68" height="60" rx="6" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1430" y="632" text-anchor="middle" font-size="11" fill="#666">«system»</text>
+<text x="1430" y="652" text-anchor="middle" font-size="11" fill="#333">액터</text>
+<text x="1430" y="702" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">AI 모델</text>
+<rect x="1396" y="400" width="68" height="60" rx="6" fill="#fff" stroke="#333" stroke-width="1.6"/>
+<text x="1430" y="422" text-anchor="middle" font-size="11" fill="#666">«system»</text>
+<text x="1430" y="442" text-anchor="middle" font-size="11" fill="#333">액터</text>
+<text x="1430" y="492" text-anchor="middle" font-size="14" font-weight="bold" fill="#222">기상청 API·공공데이터</text>
+<rect x="1310" y="900" width="235" height="120" rx="4" fill="#fff" stroke="#999"/>
+<text x="1320" y="920" font-size="12" font-weight="bold" fill="#333">범례</text>
+<line x1="1320" y1="940" x2="1370" y2="940" stroke="#333" stroke-width="1.4"/><text x="1378" y="944" font-size="12" fill="#333">액터–유스케이스 연관</text>
+<line x1="1320" y1="964" x2="1370" y2="964" stroke="#333" stroke-width="1.5" stroke-dasharray="7 5" marker-end="url(#arr)"/><text x="1378" y="968" font-size="12" fill="#333">«extend» (확장 → 기본)</text>
+<line x1="1320" y1="988" x2="1370" y2="988" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arrg)"/><text x="1378" y="992" font-size="12" fill="#333">데이터 공급·선행 관계</text>
+<text x="1320" y="1012" font-size="11" fill="#777">로그인은 전 유스케이스의 선행조건</text>
 </svg>

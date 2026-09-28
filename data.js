@@ -1,46 +1,76 @@
 /* =====================================================================
-   산불 대응 AI 목업 — 시나리오 데이터 (2025-03-22 의성 산불, 발생 후 8시간)
+   산불 대응 지휘 지원시스템 목업 — 시나리오 데이터 (2025-03-22 의성 산불)
    ---------------------------------------------------------------------
    real: true  → 공개 자료에서 가져온 값(출처는 note/meta.sources)
-   real: false → 구하지 못해 만든 가짜(합성) 값. 화면에 "가상" 표시됨
+   real: false → 구하지 못해 만든 시연용 가상값
    좌표는 [경도, 위도] (WGS84)
    ===================================================================== */
 window.SCENARIO = {
   meta: {
     id: "UISEONG-2025-03-22",
     title: "2025-03-22 의성 산불 (안평면 괴산리) — 발생 후 8시간",
-    t0: "2025-03-22T12:00:00+09:00",           // 목업 기준시각(발생 36분 뒤, 공식 단계는 아직 초기대응)
-    horizon_hours: 8,                            // P1~P8
+    now: "2025-03-22T12:00:00+09:00",            // 시연 기준 현재 시각(t0). 예측은 이 시각부터 +8h
+    horizon_hours: 8,
     stage_scheme_note: "2025년 당시는 구 1·2·3단계 체계였으나 목업은 2026년 개편 체계(초기대응·확산대응 1·2단계)로 표시한다.",
-    spread_note: "P1~P8 화선은 실제 관측 화선이 아니라 발화점·풍향·풍속으로 만든 합성 타원이다.",
+    spread_note: "P1~P8 화선은 실제 관측 화선이 아니라 발화점·풍향·풍속으로 만든 합성 타원이다. 상황 보고자가 입력한 실측 화선 폴리곤이 있으면 그 범위를 포함하도록 확장한다.",
     sources: [
-      { id: "S1", label: "산림청 X(2025-03-22 22:00 상황): 11:25 안평면 괴산리 발생, 22:00 진화율 6%, 열화상 드론 화선 모니터링", url: "https://x.com/forest_news/status/1903457349572129015" },
+      { id: "S1", label: "산림청 X(2025-03-22 22:00 상황): 11:25 안평면 괴산리 발생", url: "https://x.com/forest_news/status/1903457349572129015" },
       { id: "S2", label: "산림청 X(2025-03-23 15:00 상황): 발생지 괴산리 산61 일원", url: "https://x.com/forest_news/status/1903700317457555645" },
-      { id: "S3", label: "이데일리 2025-03-22 17:42 종합: 1단계 13:05, 2단계 13:45, 3단계 14:10, 위기경보 15:30, 헬기 27·차량 36·인력 375, 진화율 30%, 대피 200명(요양병원 환자·관계자 70여명 포함) 의성 실내체육관, 풍속 5.6 m/s", url: "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01846646642105944" },
-      { id: "S4", label: "위키백과 2025년 의성-안동 산불: 11:24 신고, 15:45 중앙선 안동–의성 차단, 18:00 안동–경주 차단, 20:40 서산영덕고속도로 차단, 철파리·방하리 주민 대피", url: "https://ko.wikipedia.org/wiki/2025%EB%85%84_%EC%9D%98%EC%84%B1-%EC%95%88%EB%8F%99_%EC%82%B0%EB%B6%88" },
-      { id: "S5", label: "OpenStreetMap(Overpass API): 마을·면사무소·학교·사찰·복지시설 좌표, 도로·철도·송전선 선형", url: "https://www.openstreetmap.org/copyright" },
+      { id: "S3", label: "이데일리 2025-03-22 17:42 종합: 헬기 27·차량 36·인력 375, 대피 200명(요양병원 70여명 포함), 풍속 5.6 m/s", url: "https://edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01846646642105944" },
+      { id: "S4", label: "위키백과 2025년 의성-안동 산불: 11:24 신고, 철파리·방하리 주민 대피", url: "https://ko.wikipedia.org/wiki/2025%EB%85%84_%EC%9D%98%EC%84%B1-%EC%95%88%EB%8F%99_%EC%82%B0%EB%B6%88" },
+      { id: "S5", label: "OpenStreetMap(Overpass API): 마을·면사무소·학교·사찰·복지시설 좌표, 도로·철도 선형, 저수지", url: "https://www.openstreetmap.org/copyright" },
       { id: "S6", label: "국가데이터처 SGIS 행정구역 경계(2025.2Q)·인구총괄(2024)", url: "https://sgis.kostat.go.kr/" },
       { id: "S7", label: "「산불 재난」 위기관리 표준매뉴얼(2026.6 일부개정) 본문 쪽수 — 근거 텍스트는 요약(원문 비공개)", url: "" }
     ]
   },
 
-  incident: {
-    fire_id: "F-2025-0322-UISEONG",
-    name: "의성 안평면 산불",
-    ignition: [128.60226, 36.36565],             // 괴산리 마을 중심(OSM). 실제 발화지 '괴산리 산61 일원'은 야산 정상부
-    ignition_addr: "경북 의성군 안평면 괴산리 산61 일원",
-    report_time: "2025-03-22T11:24:00+09:00",
-    start_time: "2025-03-22T11:25:00+09:00",
-    cause_note: "성묘객 실화 추정(보도)",
-    official_stage: "초기대응",                  // 2026 체계. 실제(구 체계)로는 13:05 1단계 발령 전
-    alert_level: "주의",
-    jurisdiction: { sido: "경상북도", sigungu: "의성군", code: "37520" },
-    position: "산불현장 통합지휘본부장",
-    position_holder: "의성군수",
-    real: true
-  },
+  // 산불 목록(UC-SIT-02). 진행 중 1건(실제 사건) + 접수 1건·종료 1건(가상, 목록 시연용)
+  incidents: [
+    {
+      id: "F-2025-0322-01", name: "의성 안평면 산불", status: "진행 중", real: true,
+      addr: "경북 의성군 안평면 괴산리 산61 일원",
+      ignition: [128.60226, 36.36565],             // 괴산리 마을 중심(OSM). 실제 발화지 '산61 일원'은 야산 정상부
+      report_time: "2025-03-22T11:24:00+09:00",
+      start_time: "2025-03-22T11:25:00+09:00",
+      report_text: "119 신고 — 괴산리 뒷산 정상부 연기·불꽃 목격, 성묘객 실화 추정(보도)",
+      intake: [["의성군(119 공동대응)", "11:24", true], ["경북도 산림재난상황실", "11:31", false], ["남부지방산림청", "11:34", false], ["산림청 중앙산림재난상황실", "11:38", false]],
+      official_stage: "초기대응", alert_level: "주의",
+      // 상황 보고자가 입력한 실측 화선(가상 12.7 ha, 발화점 북동쪽으로 진행). 예측은 이 범위를 포함하도록 확장된다
+      actual_polygon: { at: "2025-03-22T11:55:00+09:00", by: "rep01", real: false,
+        ring: [[128.60512,36.36565],[128.60548,36.36691],[128.60428,36.3677],[128.60299,36.36825],[128.60156,36.36815],[128.60071,36.36722],[128.60058,36.36631],[128.60104,36.36565],[128.60138,36.36531],[128.6013,36.36467],[128.60194,36.36451],[128.60254,36.36467],[128.60313,36.36476],[128.60369,36.36509],[128.60512,36.36565]] },
+      field_report: { containment_pct: 0, expected_suppression_hours: null },
+      evacuation_state: { order_issued: false, cbs_sent: [], completed_villages: [], injuries: [] },
+      ended_at: null
+    },
+    {
+      id: "F-2025-0322-02", name: "의성 사곡면 산불(가상)", status: "접수", real: false,
+      addr: "경북 의성군 사곡면 양지리 일원(가상)",
+      ignition: [128.7520, 36.3410],
+      report_time: "2025-03-22T11:52:00+09:00", start_time: null,
+      report_text: "주민 신고 — 논두렁 소각 중 인접 야산으로 연소 확대 의심. 현장 확인 중",
+      intake: [["의성군(119 공동대응)", "11:52", false]],
+      official_stage: "초기대응", alert_level: "주의",
+      actual_polygon: null,
+      field_report: { containment_pct: 0, expected_suppression_hours: null },
+      evacuation_state: { order_issued: false, cbs_sent: [], completed_villages: [], injuries: [] },
+      ended_at: null
+    },
+    {
+      id: "F-2025-0321-01", name: "의성 점곡면 산불(가상)", status: "종료", real: false,
+      addr: "경북 의성군 점곡면 서변리 일원(가상)",
+      ignition: [128.7250, 36.4330],
+      report_time: "2025-03-21T13:10:00+09:00", start_time: "2025-03-21T13:05:00+09:00",
+      report_text: "농산부산물 소각 부주의(추정). 0.3 ha, 지상진화로 당일 진화 완료",
+      intake: [["의성군(119 공동대응)", "13:10", false]],
+      official_stage: "초기대응", alert_level: "관심",
+      actual_polygon: null,
+      field_report: { containment_pct: 100, expected_suppression_hours: 0 },
+      evacuation_state: { order_issued: false, cbs_sent: [], completed_villages: [], injuries: [] },
+      ended_at: "2025-03-21T16:40:00+09:00"
+    }
+  ],
 
-  // 대응단계 판정(목업 근사): 표준매뉴얼 p.73 판단기준 4요소 중 면적만 적용. 풍속·진화시간·시설피해 기준은 표시만 한다.
+  // 대응단계 판정(목업 근사): 표준매뉴얼 p.73 판단기준 4요소 중 면적만 적용
   stage_rules: {
     area_ha: [
       { stage: "초기대응", max: 10 },
@@ -50,115 +80,134 @@ window.SCENARIO = {
     note: "면적 구간은 산림재난방지법 시행령 별표 기준의 요약이며, 풍속·예상 진화시간·시설피해 기준값은 매뉴얼 p.73 표를 확인해야 한다(목업 미적용)."
   },
 
-  astronomy: { sunrise: "06:31", sunset: "18:39", note: "의성 2025-03-22 근사값(천문연 계산식 기준, ±3분)" },
+  astronomy: { sunrise: "06:31", sunset: "18:39", note: "의성 2025-03-22 근사값" },
 
+  // 기상(확산 예측·위험도·진화 전략의 입력으로만 사용. 별도 기상 화면은 두지 않음)
   weather: {
     real: false,
-    note: "발생 당시 풍속 5.6 m/s(보도)만 실제. 풍향(서풍 계열)은 확산 방향 보도에서 추정, 시계열·습도·시정은 합성.",
-    warnings: ["건조특보(보도 기준, 종류 확인 필요)"],
+    note: "발생 당시 풍속 5.6 m/s(보도)만 실제. 풍향(서남서)은 확산 방향 보도에서 추정, 시계열·습도·기온은 합성.",
+    warnings: ["건조특보"],
     series: [
-      { t: "12:00", wind_ms: 5.6, wind_dir: 240, rh: 24, vis_m: 8000 },
-      { t: "13:00", wind_ms: 6.4, wind_dir: 240, rh: 21, vis_m: 6000 },
-      { t: "14:00", wind_ms: 7.1, wind_dir: 245, rh: 19, vis_m: 4000 },
-      { t: "15:00", wind_ms: 7.8, wind_dir: 250, rh: 18, vis_m: 3000 },
-      { t: "16:00", wind_ms: 7.0, wind_dir: 245, rh: 20, vis_m: 3000 },
-      { t: "17:00", wind_ms: 5.9, wind_dir: 240, rh: 26, vis_m: 3500 },
-      { t: "18:00", wind_ms: 4.6, wind_dir: 235, rh: 33, vis_m: 4000 },
-      { t: "19:00", wind_ms: 3.8, wind_dir: 230, rh: 40, vis_m: 5000 },
-      { t: "20:00", wind_ms: 3.2, wind_dir: 225, rh: 46, vis_m: 6000 }
+      { t: "12:00", wind_ms: 5.6, wind_dir: 240, rh: 24, temp_c: 19 },
+      { t: "13:00", wind_ms: 6.4, wind_dir: 240, rh: 21, temp_c: 21 },
+      { t: "14:00", wind_ms: 7.1, wind_dir: 245, rh: 19, temp_c: 22 },
+      { t: "15:00", wind_ms: 7.8, wind_dir: 250, rh: 18, temp_c: 22 },
+      { t: "16:00", wind_ms: 7.0, wind_dir: 245, rh: 20, temp_c: 21 },
+      { t: "17:00", wind_ms: 5.9, wind_dir: 240, rh: 26, temp_c: 19 },
+      { t: "18:00", wind_ms: 4.6, wind_dir: 235, rh: 33, temp_c: 16 },
+      { t: "19:00", wind_ms: 3.8, wind_dir: 230, rh: 40, temp_c: 13 },
+      { t: "20:00", wind_ms: 3.2, wind_dir: 225, rh: 46, temp_c: 11 }
     ]
   },
 
-  // 합성 확산 모델: 확산속도(km/h) = a + b × 풍속(m/s). 발화점을 뒤쪽 초점으로 하는 타원 + 각도 노이즈
-  fire_model: {
-    head: [0.30, 0.16],
-    flank: [0.08, 0.04],
-    back: 0.06,
-    noise_amp: 0.14,
-    note: "실측 화선이 아니다. 13:18 산불영향구역 73 ha(보도)와 저녁 무렵 의성읍·단촌면 접근(보도)에 대략 맞춘 합성 모델."
+  // 산불 위험도(UC-PRED-02) 조건위험도 0~100 산출 파라미터. 임상·경사는 시연 가정값
+  risk_model: {
+    grades: [{ name: "낮음", min: 0 }, { name: "보통", min: 51 }, { name: "높음", min: 66 }, { name: "매우높음", min: 86 }],
+    fuel: { type: "소나무림(침엽수)", score: 13, max: 15, note: "임상도 미확보 — 의성군 산림의 소나무 비중을 참고한 가정값" },
+    slope: { deg: 18, max: 10, note: "DEM 미적용 — 괴산리 야산 경사 가정값" },
+    weights: { wind: 30, humidity: 25, dryness: 10, fuel: 15, slope: 10, daytime: 10 },
+    note: "산림청 산불위험예보의 등급 구간(낮음·보통·높음·매우높음)을 따르되 산식은 시연용 단순 가중합이다."
   },
+
+  // 합성 확산 모델: 확산속도(km/h) = a + b × 풍속(m/s). 발화점을 뒤쪽 초점으로 하는 타원 + 각도 노이즈
+  fire_model: { head: [0.30, 0.16], flank: [0.08, 0.04], back: 0.06, noise_amp: 0.14 },
 
   // 마을: 좌표는 OSM 마을 중심점(실제). 인구·가구·고령·장애 수는 합성(안평면 2024 총인구 1,962명·평균나이 64.3세(SGIS)를 참고해 배분)
   villages: [
-    { id: "goesan",   name: "괴산리", emd: "안평면", lng: 128.60226, lat: 36.36565, pop: 84,  hh: 47,  elderly: 46,  disabled: 3,  real_coord: true },
-    { id: "dook",     name: "도옥리", emd: "안평면", lng: 128.60089, lat: 36.35350, pop: 92,  hh: 51,  elderly: 49,  disabled: 4,  real_coord: true },
-    { id: "bakgok",   name: "박곡리", emd: "안평면", lng: 128.61967, lat: 36.38298, pop: 138, hh: 74,  elderly: 71,  disabled: 6,  real_coord: true },
-    { id: "changgil", name: "창길리", emd: "안평면", lng: 128.59744, lat: 36.39479, pop: 121, hh: 66,  elderly: 63,  disabled: 5,  real_coord: true },
-    { id: "sinan",    name: "신안리", emd: "안평면", lng: 128.61166, lat: 36.34063, pop: 105, hh: 58,  elderly: 55,  disabled: 4,  real_coord: true },
-    { id: "sinwol",   name: "신월리", emd: "안평면", lng: 128.63824, lat: 36.35874, pop: 97,  hh: 53,  elderly: 52,  disabled: 4,  real_coord: true },
-    { id: "seoktap",  name: "석탑리", emd: "안평면", lng: 128.64337, lat: 36.38281, pop: 76,  hh: 42,  elderly: 41,  disabled: 3,  real_coord: true },
-    { id: "majeon",   name: "마전리", emd: "안평면", lng: 128.56532, lat: 36.36243, pop: 88,  hh: 48,  elderly: 45,  disabled: 3,  real_coord: true },
-    { id: "daesa",    name: "대사리", emd: "안평면", lng: 128.57405, lat: 36.34284, pop: 110, hh: 60,  elderly: 57,  disabled: 5,  real_coord: true },
-    { id: "cheolpa",  name: "철파리", emd: "의성읍", lng: 128.67117, lat: 36.37326, pop: 412, hh: 205, elderly: 160, disabled: 12, real_coord: true, note: "실제 3/22 대피 마을(보도)" },
-    { id: "bangha",   name: "방하리", emd: "단촌면", lng: 128.66258, lat: 36.39526, pop: 143, hh: 78,  elderly: 79,  disabled: 6,  real_coord: true, note: "실제 3/22 대피 마을(보도)" },
-    { id: "secheon",  name: "세촌리", emd: "단촌면", lng: 128.66140, lat: 36.42581, pop: 118, hh: 64,  elderly: 66,  disabled: 5,  real_coord: true },
-    { id: "hahwa",    name: "하화리", emd: "단촌면", lng: 128.68771, lat: 36.41073, pop: 131, hh: 71,  elderly: 70,  disabled: 5,  real_coord: true, note: "중앙선 하화터널 부근, 15:45 열차 운행 차단(보도)" },
-    { id: "sanghwa",  name: "상화리", emd: "단촌면", lng: 128.71650, lat: 36.39835, pop: 96,  hh: 52,  elderly: 54,  disabled: 4,  real_coord: true }
+    { id: "goesan",   name: "괴산리", emd: "안평면", lng: 128.60226, lat: 36.36565, pop: 84,  hh: 47,  elderly: 46,  disabled: 3 },
+    { id: "dook",     name: "도옥리", emd: "안평면", lng: 128.60089, lat: 36.35350, pop: 92,  hh: 51,  elderly: 49,  disabled: 4 },
+    { id: "bakgok",   name: "박곡리", emd: "안평면", lng: 128.61967, lat: 36.38298, pop: 138, hh: 74,  elderly: 71,  disabled: 6 },
+    { id: "changgil", name: "창길리", emd: "안평면", lng: 128.59744, lat: 36.39479, pop: 121, hh: 66,  elderly: 63,  disabled: 5 },
+    { id: "sinan",    name: "신안리", emd: "안평면", lng: 128.61166, lat: 36.34063, pop: 105, hh: 58,  elderly: 55,  disabled: 4 },
+    { id: "sinwol",   name: "신월리", emd: "안평면", lng: 128.63824, lat: 36.35874, pop: 97,  hh: 53,  elderly: 52,  disabled: 4 },
+    { id: "seoktap",  name: "석탑리", emd: "안평면", lng: 128.64337, lat: 36.38281, pop: 76,  hh: 42,  elderly: 41,  disabled: 3 },
+    { id: "majeon",   name: "마전리", emd: "안평면", lng: 128.56532, lat: 36.36243, pop: 88,  hh: 48,  elderly: 45,  disabled: 3 },
+    { id: "daesa",    name: "대사리", emd: "안평면", lng: 128.57405, lat: 36.34284, pop: 110, hh: 60,  elderly: 57,  disabled: 5 },
+    { id: "cheolpa",  name: "철파리", emd: "의성읍", lng: 128.67117, lat: 36.37326, pop: 412, hh: 205, elderly: 160, disabled: 12 },
+    { id: "bangha",   name: "방하리", emd: "단촌면", lng: 128.66258, lat: 36.39526, pop: 143, hh: 78,  elderly: 79,  disabled: 6 },
+    { id: "secheon",  name: "세촌리", emd: "단촌면", lng: 128.66140, lat: 36.42581, pop: 118, hh: 64,  elderly: 66,  disabled: 5 },
+    { id: "hahwa",    name: "하화리", emd: "단촌면", lng: 128.68771, lat: 36.41073, pop: 131, hh: 71,  elderly: 70,  disabled: 5 },
+    { id: "sanghwa",  name: "상화리", emd: "단촌면", lng: 128.71650, lat: 36.39835, pop: 96,  hh: 52,  elderly: 54,  disabled: 4 }
   ],
 
   // 보호대상·취약시설
   facilities: [
-    { id: "care1",     name: "요양병원(위치 가상)",   type: "care",     lng: 128.5905, lat: 36.3800, capacity: 70, real: false, note: "보도: 3/22 요양병원 환자·관계자 70여명 의성 실내체육관 대피(실제). 명칭·위치는 가상" },
-    { id: "welfare1",  name: "의성장애인복지센터",   type: "welfare",  lng: 128.68017, lat: 36.3596, capacity: 40, real: true,  note: "좌표 실제(OSM), 수용 인원은 가상" },
-    { id: "heritage1", name: "고운사",               type: "heritage", lng: 128.74883, lat: 36.45815, real: true, note: "국가유산. 실제로는 3/25 소실. 8시간 창에서는 확산 범위 밖" },
-    { id: "temple1",   name: "운람사",               type: "temple",   lng: 128.60624, lat: 36.3611,  real: true, note: "발화점 남쪽 0.6 km 사찰(OSM). 문화재 지정 여부 확인 필요" },
-    { id: "school1",   name: "의성북부초등학교",     type: "school",   lng: 128.6925,  lat: 36.36137, real: true, note: "좌표 실제(OSM)" }
+    { id: "care1",     name: "요양병원(위치 가상)",   type: "care",     lng: 128.5905, lat: 36.3800, capacity: 70, real: false },
+    { id: "welfare1",  name: "의성장애인복지센터",   type: "welfare",  lng: 128.68017, lat: 36.3596, capacity: 40, real: true },
+    { id: "heritage1", name: "고운사",               type: "heritage", lng: 128.74883, lat: 36.45815, real: true },
+    { id: "temple1",   name: "운람사",               type: "temple",   lng: 128.60624, lat: 36.3611,  real: true },
+    { id: "school1",   name: "의성북부초등학교",     type: "school",   lng: 128.6925,  lat: 36.36137, real: true }
   ],
 
   // 대피소: 좌표 실제(OSM), 수용 인원은 가상
   shelters: [
-    { id: "sh1", name: "의성 실내체육관",  lng: 128.70254, lat: 36.35664, capacity: 500, real_coord: false, note: "실제 대피 장소(보도). 좌표는 의성종합운동장(OSM)으로 대체" },
-    { id: "sh2", name: "안평면사무소",     lng: 128.58418, lat: 36.37676, capacity: 150, real_coord: true },
-    { id: "sh3", name: "단촌면사무소",     lng: 128.67430, lat: 36.42205, capacity: 150, real_coord: true },
-    { id: "sh4", name: "봉양면사무소",     lng: 128.57635, lat: 36.30072, capacity: 200, real_coord: true }
+    { id: "sh1", name: "의성 실내체육관",  lng: 128.70254, lat: 36.35664, capacity: 500 },
+    { id: "sh2", name: "안평면사무소",     lng: 128.58418, lat: 36.37676, capacity: 150 },
+    { id: "sh3", name: "단촌면사무소",     lng: 128.67430, lat: 36.42205, capacity: 150 },
+    { id: "sh4", name: "봉양면사무소",     lng: 128.57635, lat: 36.30072, capacity: 200 }
+  ],
+
+  // 유관기관(기관 레이어). 위치는 의성읍 중심부 근사값(가상)
+  agencies: [
+    { id: "ag1", name: "의성소방서",           type: "fire",   lng: 128.6950, lat: 36.3520, real: false },
+    { id: "ag2", name: "의성경찰서",           type: "police", lng: 128.6990, lat: 36.3560, real: false },
+    { id: "ag3", name: "의성군청(통합지휘본부)", type: "gov",  lng: 128.6971, lat: 36.3528, real: false },
+    { id: "ag4", name: "한국전력 의성지사",    type: "kepco",  lng: 128.6920, lat: 36.3480, real: false }
   ],
 
   // 송전선: OSM power=line 이 로드되면(data_osm_lines.js) 그것을 쓰고, 없으면 아래 가상 선형
   power_line_fallback: { name: "송전선(가상 선형)", real: false, coords: [[128.575, 36.345], [128.605, 36.372], [128.640, 36.392], [128.675, 36.408]] },
 
-  // 대피로·진입로: 선형은 가상(도로 노드를 잇지 않은 개략선). 겹침 구간 판정은 이 데이터로 고정
+  // 대피로·진입로: 선형은 가상(개략선). 겹침 구간 판정은 이 데이터로 고정
   routes: [
-    { id: "evac-A",   kind: "evac",     name: "대피로: 박곡리 → 의성 실내체육관", real: false,
+    { id: "evac-A",   kind: "evac",     name: "대피로: 박곡리 → 의성 실내체육관",
       coords: [[128.61967, 36.38298], [128.635, 36.378], [128.655, 36.372], [128.680, 36.365], [128.70254, 36.35664]] },
-    { id: "access-1", kind: "access",   name: "진화차량 진입로: 의성소방서(가상) → 발화점", real: false,
+    { id: "access-1", kind: "access",   name: "진화차량 진입로: 의성소방서 → 발화점",
       coords: [[128.695, 36.352], [128.680, 36.365], [128.655, 36.372], [128.635, 36.378], [128.615, 36.372], [128.60226, 36.36565]] },
-    { id: "conflict", kind: "conflict", name: "대피로·진입로 겹침 구간(가상)", real: false,
+    { id: "conflict", kind: "conflict", name: "대피로·진입로 겹침 구간",
       coords: [[128.635, 36.378], [128.655, 36.372], [128.680, 36.365]] }
   ],
 
-  // 자원(12:00 시점, 가상). 참고: 17:42 보도 기준 헬기 27대·차량 36대·인력 375명
-  resources: {
-    real: false,
-    heli_deployed: 4, heli_available_nearby: 6,
-    ground_crew_deployed: 60, fire_trucks_deployed: 8,
-    crew_positions: [[128.607, 36.368], [128.612, 36.371], [128.598, 36.360]],
-    base_note: "산림항공관리소·소방서 위치와 보유 대수는 가상"
-  },
+  // 진화자원(UC-ADMIN-02가 관리하는 데이터. 재난 시 자원 현황(UC-SIT-03)과 S3 자원 배분 제안의 공급원). 전부 가상
+  // type: 헬기 | 차량 | 인력   status: 투입 | 대기 | 정비   qty: 인력은 명, 헬기·차량은 1
+  resources: [
+    { id: "r01", type: "헬기", name: "KFS-H01", org: "산림항공본부(안동)", qty: 1, status: "투입" },
+    { id: "r02", type: "헬기", name: "KFS-H02", org: "산림항공본부(안동)", qty: 1, status: "투입" },
+    { id: "r03", type: "헬기", name: "KFS-H03", org: "산림항공본부(울진)", qty: 1, status: "투입" },
+    { id: "r04", type: "헬기", name: "KFS-H04", org: "경북도 임차헬기", qty: 1, status: "투입" },
+    { id: "r05", type: "헬기", name: "KFS-A01", org: "산림항공본부(안동)", qty: 1, status: "대기" },
+    { id: "r06", type: "헬기", name: "KFS-A02", org: "산림항공본부(안동)", qty: 1, status: "대기" },
+    { id: "r07", type: "헬기", name: "KFS-A03", org: "산림항공본부(울진)", qty: 1, status: "대기" },
+    { id: "r08", type: "헬기", name: "KFS-A04", org: "산림항공본부(울진)", qty: 1, status: "대기" },
+    { id: "r09", type: "헬기", name: "KFS-A05", org: "경북도 임차헬기", qty: 1, status: "대기" },
+    { id: "r10", type: "헬기", name: "KFS-A06", org: "경북도 임차헬기", qty: 1, status: "대기" },
+    { id: "r11", type: "헬기", name: "KFS-M01", org: "산림항공본부(안동)", qty: 1, status: "정비" },
+    { id: "r12", type: "인력", name: "산불전문진화대 1조", org: "의성군", qty: 20, status: "투입", pos: [128.607, 36.368] },
+    { id: "r13", type: "인력", name: "산불전문진화대 2조", org: "의성군", qty: 20, status: "투입", pos: [128.612, 36.371] },
+    { id: "r14", type: "인력", name: "산불전문진화대 3조", org: "의성군", qty: 20, status: "투입", pos: [128.598, 36.360] },
+    { id: "r15", type: "인력", name: "산불전문진화대 4조", org: "의성군", qty: 20, status: "대기" },
+    { id: "r16", type: "인력", name: "공중진화대 1조", org: "산림항공본부", qty: 15, status: "대기" },
+    { id: "r17", type: "인력", name: "특수진화대 1조", org: "남부지방산림청", qty: 15, status: "대기" },
+    { id: "r18", type: "차량", name: "의성 펌프 1", org: "의성소방서", qty: 1, status: "투입" },
+    { id: "r19", type: "차량", name: "의성 펌프 2", org: "의성소방서", qty: 1, status: "투입" },
+    { id: "r20", type: "차량", name: "의성 물탱크 1", org: "의성소방서", qty: 1, status: "투입" },
+    { id: "r21", type: "차량", name: "의성 물탱크 2", org: "의성소방서", qty: 1, status: "투입" },
+    { id: "r22", type: "차량", name: "안평 119안전센터 펌프", org: "의성소방서", qty: 1, status: "투입" },
+    { id: "r23", type: "차량", name: "산불진화차 1", org: "의성군", qty: 1, status: "투입" },
+    { id: "r24", type: "차량", name: "산불진화차 2", org: "의성군", qty: 1, status: "투입" },
+    { id: "r25", type: "차량", name: "산불진화차 3", org: "의성군", qty: 1, status: "투입" },
+    { id: "r26", type: "차량", name: "안동 펌프 1", org: "안동소방서(응원)", qty: 1, status: "대기" },
+    { id: "r27", type: "차량", name: "안동 물탱크 1", org: "안동소방서(응원)", qty: 1, status: "대기" },
+    { id: "r28", type: "차량", name: "산불진화차 4", org: "의성군", qty: 1, status: "정비" }
+  ],
 
-  // 현장 보고(12:00 시점, 가상)
-  field_report: { burned_area_ha: 12, fireline_length_km: 1.5, containment_pct: 0, expected_suppression_hours: null },
-
-  // 대피 상태(12:00 시점)
-  evacuation_state: { order_issued: false, cbs_sent: [], completed_villages: [], unreached_villages: [], injuries: [] },
-
-  // 실제 경과(보도 기준). 구 대응단계 체계 표기 그대로
-  timeline_actual: [
-    { t: "11:24", text: "119 신고 접수(성묘객 실화 추정)", src: "S4" },
-    { t: "11:25", text: "안평면 괴산리 산61 일원 발생(산림청 공식 발생 시각)", src: "S1" },
-    { t: "12:00", text: "목업 기준시각 t0 — 초기대응(2026 체계 표시)", src: "" },
-    { t: "13:05", text: "산불 대응 1단계 발령(구 체계, 보도에 따라 12:55)", src: "S3" },
-    { t: "13:18", text: "산불영향구역 73 ha", src: "S4" },
-    { t: "13:45", text: "대응 2단계 격상(보도에 따라 13:18)", src: "S3" },
-    { t: "13:57", text: "금성면 청로리 별도 발생", src: "S4" },
-    { t: "14:10", text: "대응 3단계 격상", src: "S3" },
-    { t: "14:39", text: "안계면 용기리 별도 발생", src: "S4" },
-    { t: "15:30", text: "국가위기경보 주의 → 경계·심각 상향", src: "S3" },
-    { t: "15:45", text: "중앙선 안동역–의성역 운행 차단(하화터널 부근 접근)", src: "S4" },
-    { t: "17:42", text: "헬기 27대·차량 36대·인력 375명 투입, 진화율 30%, 주민 200명(요양병원 70여명 포함) 의성 실내체육관 대피", src: "S3" },
-    { t: "18:00", text: "중앙선 안동역–경주역 운행 차단", src: "S4" },
-    { t: "18:39", text: "일몰(근사)", src: "" },
-    { t: "20:40", text: "서산영덕고속도로 서의성IC–안동JC, 중앙고속도로 안동JC 구간 차단", src: "S4" },
-    { t: "22:00", text: "진화율 6%, 열화상 드론으로 화선 모니터링", src: "S1" }
+  // 계정(UC-ADMIN-01이 관리, UC-AUTH-01의 계정 공급원). 전부 가상. 아이디·비밀번호·사용자 구분이 모두 맞아야 진입한다
+  accounts: [
+    { id: "cmd01",   pw: "1234", name: "통합지휘권자 1", role: "commander", status: "발급", issued: "2025-03-02" },
+    { id: "view01",  pw: "1234", name: "열람자 1(유관기관)", role: "viewer", status: "발급", issued: "2025-03-02" },
+    { id: "view02",  pw: "1234", name: "열람자 2(상급 본부)", role: "viewer", status: "회수", issued: "2025-01-15" },
+    { id: "rep01",   pw: "1234", name: "상황 보고자 1(현장)", role: "reporter", status: "발급", issued: "2025-03-02" },
+    { id: "admin01", pw: "1234", name: "전산 관리자", role: "admin", status: "발급", issued: "2025-01-02" }
   ],
 
   // 근거 청크(요약). 원문 비공개이므로 쪽수 + 요약만 둔다
@@ -181,7 +230,7 @@ window.SCENARIO = {
     "SM-p021": { doc: "표준매뉴얼", page: "p.21", section: "긴급구조통제단", text: "긴급구조는 소방의 긴급구조통제단장이 긴급구조기관의 역할을 분담해 지휘한다." }
   },
 
-  // 결정 카탈로그(핵심 파일 F4-3). 트리거·권한은 의사결정 항목 정리.md 기준
+  // 결정 항목 카탈로그: 진화 S1~S7(UC-PROP-01), 대피 E1~E7(UC-PROP-02)
   catalog: [
     { id: "S1", axis: "진화", name: "대응단계 판단·격상 검토", authority: "협의" },
     { id: "S2", axis: "진화", name: "진화 우선지역·보호대상 선정", authority: "직접" },
@@ -191,11 +240,11 @@ window.SCENARIO = {
     { id: "S6", axis: "진화", name: "유관기관 동원·협조 요청", authority: "직접/요청" },
     { id: "S7", axis: "진화", name: "진화인력 안전·투입 관리", authority: "직접" },
     { id: "E1", axis: "대피", name: "위험구역 설정", authority: "직접" },
-    { id: "E2", axis: "대피", name: "대피 명령 대상·순서·시점", authority: "직접" },
+    { id: "E2", axis: "대피", name: "대피 대상·순서·시점 결정", authority: "직접" },
     { id: "E3", axis: "대피", name: "취약시설·미대피 주민 조치", authority: "직접" },
     { id: "E4", axis: "대피", name: "대피소 배정·분산", authority: "직접" },
     { id: "E5", axis: "대피", name: "대피 경로·교통통제", authority: "요청" },
-    { id: "E6", axis: "대피", name: "전파(재난문자·방송)", authority: "직접" },
+    { id: "E6", axis: "대피", name: "재난문자·방송 전파 제안", authority: "직접" },
     { id: "E7", axis: "대피", name: "인명구조·긴급구조 요청", authority: "요청" }
   ]
 };
