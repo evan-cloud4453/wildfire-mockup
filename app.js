@@ -637,7 +637,7 @@
     $("#prop-meta").innerHTML = run ? `기준 <b>${hhmm(T0)}</b> · 공식 <b>${esc(run.snapshot.official_stage)}</b> · 판정 <b>${esc(run.R.recStage)}</b> · <b>${run.id}</b>(${esc(run.reason)}, ${hhmm(run.createdAt)})${isCurrent ? "" : ' <span class="badge b-없음">이전 판</span> <a href="#" id="prop-latest">최신 판으로</a>'}` : "예측 실행 후 생성됩니다";
     const pl = $("#prop-latest"); if (pl) pl.onclick = (e) => { e.preventDefault(); st.viewRun = st.currentRun; renderAll(); };
     const banner = $("#stage-banner");
-    if (run && run.R.stageUp) { banner.classList.add("on"); banner.innerHTML = `<b>격상 검토 권고</b> — 4요소 중 ${esc(run.R.stageDrivers.join("·"))}이(가) ${esc(run.R.recStage)} 기준입니다. 산림청장과 협의하십시오.${run.R.nextHolder ? ` 격상 시 지휘권자는 <b>${esc(run.R.nextHolder)}</b>, 주민대피 명령권은 시장·군수·구청장에게 남습니다.` : ""}${tip("판단기준 4요소(예상 피해면적·평균풍속·예상 진화시간·시설피해, 표준매뉴얼 p.73) 중 가장 높은 단계로 판정합니다. 예상 진화시간은 상황 정정으로 입력한 값이며 없으면 제외합니다. 구간값은 시행령 별표 기준을 2026 체계에 대응시킨 목업 근사값이고, 발령은 산림청장이 통합지휘본부와 협의해 결정하며 이 화면은 권고만 합니다.", "l")}`; }
+    if (run && run.R.stageUp) { banner.classList.add("on"); banner.innerHTML = `<b>격상 검토 권고</b> — 4요소 중 ${esc(josa(run.R.stageDrivers.join("·"), "이", "가"))} ${esc(run.R.recStage)} 기준입니다. 산림청장과 협의하십시오.${run.R.nextHolder ? ` 격상 시 지휘권자는 <b>${esc(run.R.nextHolder)}</b>, 주민대피 명령권은 시장·군수·구청장에게 남습니다.` : ""}${tip("판단기준 4요소(예상 피해면적·평균풍속·예상 진화시간·시설피해, 표준매뉴얼 p.73) 중 가장 높은 단계로 판정합니다. 예상 진화시간은 상황 정정으로 입력한 값이며 없으면 제외합니다. 구간값은 시행령 별표 기준을 2026 체계에 대응시킨 목업 근사값이고, 발령은 산림청장이 통합지휘본부와 협의해 결정하며 이 화면은 권고만 합니다.", "l")}`; }
     else banner.classList.remove("on");
     const box = $("#cards");
     if (!run) { box.innerHTML = `<div class="muted" style="padding:18px 6px;text-align:center">${canOperate() ? "「확산예측」 탭에서 예측을 실행하면<br>진화·대피 대응 제안이 생성됩니다." : "통합지휘권자가 예측을 실행하면 표시됩니다."}</div>`; $("#prop-summary").innerHTML = ""; return; }
@@ -955,7 +955,7 @@
     const kstFmt = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
     const kstNow = () => { const p = {}; kstFmt.formatToParts(new Date()).forEach((x) => (p[x.type] = x.value)); return `${p.year}.${p.month}.${p.day} ${p.hour === "24" ? "00" : p.hour}:${p.minute}:${p.second}`; };
     const tickClock = () => { const t = kstNow(); ["#lg-clock", "#hdr-clock", "#admin-clock"].forEach((id) => { const el = $(id); if (el) el.textContent = t; }); }; tickClock(); setInterval(tickClock, 1000);
-    $("#btn-logout").onclick = logout; $("#admin-logout").onclick = logout;
+    $("#btn-logout").onclick = () => logout(); $("#admin-logout").onclick = () => logout();
     $("#chat-fab").onclick = openChatPopup;
     $("#chat-close").onclick = () => { showPanel("#chat-panel", false); $("#chat-fab").style.display = ""; };
     $$(".menu-btn").forEach((b) => (b.onclick = () => showTab(b.dataset.menu)));
