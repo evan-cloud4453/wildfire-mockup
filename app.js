@@ -43,7 +43,7 @@
     playing: false, timer: null,
     wind: { ms: S.weather.series[0].wind_ms, dir: S.weather.series[0].wind_dir },
     events: [], chatCtx: null, sat: true, axis: "진화", filter: "all", showNone: { "진화": false, "대피": false },
-    showEnded: false, houses: null, markers: {}, emdLabels: [], crewMarkers: [],
+    showEnded: false, houses: null, markers: {}, emdLabels: [], crewMarkers: [], lastActive: Date.now(),
     rep: { editingId: null, pickMode: false, drawMode: false, pts: [], ring: null, showEnded: false }
   };
   const inc = () => S.incidents.find((i) => i.id === state.incId);
@@ -878,11 +878,12 @@
   function renderAdmin() {
     $("#admin-user").innerHTML = `<b>${esc(state.user)}</b> · ${ROLE_LABEL.admin}`;
     const roleOpts = (sel) => Object.entries(ROLE_LABEL).map(([k, v]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${v}</option>`).join("");
-    $("#admin-accounts").innerHTML = `<div class="tot"><span>발급 <b>${S.accounts.filter((a) => a.status === "발급").length}</b></span><span>회수 <b>${S.accounts.filter((a) => a.status === "회수").length}</b></span><span>조작 권한 <b>${S.accounts.filter((a) => a.role === "commander" && a.status === "발급").length}</b></span><span>열람 권한 <b>${S.accounts.filter((a) => a.role === "viewer" && a.status === "발급").length}</b></span></div>
-      <table class="grid"><thead><tr><th>아이디</th><th>이름</th><th>권한</th><th>상태</th><th>발급일</th><th style="width:150px">관리</th></tr></thead><tbody>${S.accounts.map((a) => `<tr><td><b>${esc(a.id)}</b></td><td>${esc(a.name)}</td><td><select data-role="${a.id}">${roleOpts(a.role)}</select></td><td style="text-align:center"><span class="badge b-${a.status}">${a.status}</span></td><td class="num small">${a.issued}</td><td class="actions"><button data-toggle="${a.id}">${a.status === "발급" ? "회수" : "재발급"}</button> <button data-del="${a.id}">삭제</button></td></tr>`).join("")}</tbody></table>
+    $("#admin-accounts").innerHTML = `<div class="tot"><span>발급 <b>${S.accounts.filter((a) => a.status === "발급").length}</b></span><span>회수 <b>${S.accounts.filter((a) => a.status === "회수").length}</b></span><span>잠금 <b>${S.accounts.filter((a) => a.locked).length}</b></span><span>조작 권한 <b>${S.accounts.filter((a) => a.role === "commander" && a.status === "발급").length}</b></span><span>열람 권한 <b>${S.accounts.filter((a) => a.role === "viewer" && a.status === "발급").length}</b></span></div>
+      <table class="grid"><thead><tr><th>아이디</th><th>이름</th><th>권한</th><th>상태</th><th>발급일</th><th style="width:210px">관리</th></tr></thead><tbody>${S.accounts.map((a) => `<tr><td><b>${esc(a.id)}</b></td><td>${esc(a.name)}</td><td><select data-role="${a.id}">${roleOpts(a.role)}</select></td><td style="text-align:center"><span class="badge b-${a.status}">${a.status}</span>${a.locked ? ' <span class="badge b-즉시">잠금</span>' : a.failed ? ` <span class="small muted">실패 ${a.failed}회</span>` : ""}</td><td class="num small">${a.issued}</td><td class="actions"><button data-toggle="${a.id}">${a.status === "발급" ? "회수" : "재발급"}</button> ${a.locked || a.failed ? `<button data-unlock="${a.id}">잠금 해제</button> ` : ""}<button data-del="${a.id}">삭제</button></td></tr>`).join("")}</tbody></table>
       <div class="form"><label>아이디<input id="ac-id" placeholder="예: cmd02"></label><label>비밀번호<input id="ac-pw" value="1234"></label><label>이름<input id="ac-name" placeholder="소속·직무"></label><label>권한<select id="ac-role">${roleOpts("viewer")}</select></label><button id="ac-add" class="primary">계정 발급</button></div>`;
     $$("#admin-accounts [data-role]").forEach((s) => (s.onchange = () => { const a = S.accounts.find((x) => x.id === s.dataset.role); const before = ROLE_LABEL[a.role]; a.role = s.value; addEvent("관리", `계정 권한 변경 — ${a.id}: ${before} → ${ROLE_LABEL[a.role]}`); toast(`${a.id} 권한을 ${ROLE_LABEL[a.role]}(으)로 변경했습니다.`); renderAdmin(); }));
     $$("#admin-accounts [data-toggle]").forEach((b) => (b.onclick = () => { const a = S.accounts.find((x) => x.id === b.dataset.toggle); a.status = a.status === "발급" ? "회수" : "발급"; if (a.status === "발급") a.issued = ymd(new Date()).replace(/\./g, "-"); addEvent("관리", `계정 ${a.status === "발급" ? "재발급" : "회수"} — ${a.id}(${ROLE_LABEL[a.role]})`); renderAdmin(); }));
+    $$("#admin-accounts [data-unlock]").forEach((b) => (b.onclick = () => { const a = S.accounts.find((x) => x.id === b.dataset.unlock); a.locked = false; a.failed = 0; addEvent("관리", `계정 잠금 해제 — ${a.id}(실패 횟수 초기화)`); renderAdmin(); toast(`${a.id} 잠금을 해제했습니다.`); }));
     $$("#admin-accounts [data-del]").forEach((b) => (b.onclick = () => { const a = S.accounts.find((x) => x.id === b.dataset.del); if (a.id === state.user) { toast("로그인 중인 계정은 삭제할 수 없습니다."); return; } S.accounts.splice(S.accounts.indexOf(a), 1); addEvent("관리", `계정 삭제 — ${a.id}(${ROLE_LABEL[a.role]})`); renderAdmin(); }));
     $("#ac-add").onclick = () => { const id = $("#ac-id").value.trim(), name = $("#ac-name").value.trim(); if (!id || !name) { toast("아이디와 이름을 입력하십시오."); return; } if (S.accounts.find((a) => a.id === id)) { toast("이미 있는 아이디입니다."); return; } const role = $("#ac-role").value; S.accounts.push({ id, pw: $("#ac-pw").value || "1234", name, role, status: "발급", issued: ymd(new Date()).replace(/\./g, "-") }); addEvent("관리", `계정 발급 — ${id}(${ROLE_LABEL[role]}, ${name})`); renderAdmin(); toast(`${id} 계정을 발급했습니다.`); };
 
@@ -911,14 +912,22 @@
     const acc = S.accounts.find((a) => a.role === role && a.status === "발급") || S.accounts.find((a) => a.role === role);
     if (acc) { $("#login-id").value = acc.id; $("#login-pw").value = acc.pw || ""; }
   }
+  // SER-001: 같은 아이디로 5회 연속 실패하면 잠금(전산 관리자가 해제), 30분 무조작 시 자동 로그아웃
+  const LOCK_AFTER = 5, IDLE_MS = 30 * 60 * 1000;
+  const LOCK_MSG = "계정이 잠겼습니다. 전산 관리자에게 문의하십시오.";
   function login() {
     const id = $("#login-id").value.trim(), pw = $("#login-pw").value, role = $("#login-role").value, err = $("#login-err");
     const fail = (msg) => { err.textContent = msg; toast(msg, 2800); };
     err.textContent = "";
     if (!id) { fail("아이디를 입력하십시오."); return; }
     const acc = S.accounts.find((a) => a.id === id);
-    if (!acc || (acc.pw || "") !== pw || acc.role !== role) { fail("잘못된 아이디 또는 비밀번호입니다."); return; }
+    if (acc && acc.locked) { fail(LOCK_MSG); return; }
+    if (!acc || (acc.pw || "") !== pw || acc.role !== role) {
+      if (acc) { acc.failed = (acc.failed || 0) + 1; if (acc.failed >= LOCK_AFTER) { acc.locked = true; addEvent("시스템", `${acc.id} 계정 잠금(로그인 ${LOCK_AFTER}회 연속 실패)`); fail(LOCK_MSG); return; } }
+      fail("잘못된 아이디 또는 비밀번호입니다."); return;
+    }
     if (acc.status === "회수") { fail("회수된 계정입니다. 전산 관리자에게 발급을 요청하십시오."); return; }
+    acc.failed = 0; state.lastActive = Date.now();
     state.user = id; state.role = acc.role; state.loginAt = state.loginAt || Date.now();
     $("#login-overlay").style.display = "none";
     $("#chat-log").innerHTML = ""; state.chatCtx = null;
@@ -932,7 +941,8 @@
     if (state.role === "viewer" && !IS().predicted && inc().status !== "종료") runPrediction(true);
     else if (state.role === "commander" && !IS().predicted) toast("「확산예측」 탭에서 「확산 예측 실행」을 누르면 예측과 대응 제안이 생성됩니다.", 4200);
   }
-  function logout() { pause(); cancelModes(); addEvent("시스템", `${state.user} 로그아웃`); state.role = null; $("#admin-screen").classList.remove("on"); $("#login-overlay").style.display = ""; $("#login-err").textContent = ""; }
+  function logout(reason) { pause(); cancelModes(); addEvent("시스템", reason ? `${state.user} 자동 로그아웃(${reason})` : `${state.user} 로그아웃`); state.role = null; $("#admin-screen").classList.remove("on"); $("#login-overlay").style.display = ""; $("#login-err").textContent = ""; if (reason) { $("#login-err").textContent = `${reason}으로 자동 로그아웃되었습니다.`; toast(`${reason}으로 자동 로그아웃되었습니다.`, 4000); } }
+  function checkIdle() { if (state.role && Date.now() - state.lastActive >= IDLE_MS) logout("30분 무조작"); }
   function renderAll() { if (!state.role || state.role === "admin") return; renderHeader(); if (state.role === "reporter") { renderReporter(); return; } renderStatus(); renderPredict(); renderResources(); renderProposal(); renderHistory(); }
 
   // ------------------------------------------------------------------ 바인딩
@@ -981,6 +991,8 @@
     $("#modal-bg").addEventListener("click", (e) => { if (e.target.id === "modal-bg") closeModal(); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeModal(); $("#evidence-drawer").classList.remove("on"); cancelModes(); } });
     ["#info-panel", "#left-panel", "#legend-panel", "#chat-panel", "#rep-panel"].forEach((id) => makeDraggable($(id)));
+    ["mousedown", "keydown", "wheel", "touchstart", "mousemove"].forEach((ev) => document.addEventListener(ev, () => { state.lastActive = Date.now(); }, { passive: true }));
+    setInterval(checkIdle, 15000);
   }
 
   // 마커 스타일 (위성영상 위 가독성: 흰 라벨)
@@ -1011,5 +1023,5 @@
   bind(); renderLegend();
   $("#ip-clock").textContent = `${ymd(T0)} ${hhmm(T0)}`;
   document.body.classList.add("satmap");
-  window.__mock = { state, S, get map() { return map; }, ringAreaHa, firePolygon, runPrediction, generateProposal, computeRisk, IS, inc, events: state.events };
+  window.__mock = { state, S, get map() { return map; }, ringAreaHa, firePolygon, runPrediction, generateProposal, computeRisk, IS, inc, events: state.events, checkIdle, IDLE_MS };
 })();
