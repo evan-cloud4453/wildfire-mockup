@@ -932,7 +932,10 @@
   function bind() {
     $("#login-btn").onclick = login; ["#login-pw", "#login-id"].forEach((id) => $(id).addEventListener("keydown", (e) => e.key === "Enter" && login()));
     $("#login-role").addEventListener("change", fillDemoAccount);
-    const lgClock = () => { const n = new Date(); $("#lg-clock").textContent = `${ymd(n)} ${hhmmss(n)}`; }; lgClock(); setInterval(lgClock, 1000);
+    // 서버 현재 시각(KST). 브라우저 시간대와 무관하게 Asia/Seoul로 표시
+    const kstFmt = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+    const kstNow = () => { const p = {}; kstFmt.formatToParts(new Date()).forEach((x) => (p[x.type] = x.value)); return `${p.year}.${p.month}.${p.day} ${p.hour === "24" ? "00" : p.hour}:${p.minute}:${p.second}`; };
+    const tickClock = () => { const t = kstNow(); ["#lg-clock", "#hdr-clock", "#admin-clock"].forEach((id) => { const el = $(id); if (el) el.textContent = t; }); }; tickClock(); setInterval(tickClock, 1000);
     $("#btn-logout").onclick = logout; $("#admin-logout").onclick = logout;
     $("#chat-fab").onclick = openChatPopup;
     $("#chat-close").onclick = () => { showPanel("#chat-panel", false); $("#chat-fab").style.display = ""; };

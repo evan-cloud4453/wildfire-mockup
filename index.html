@@ -108,6 +108,9 @@
   #top1 .sys .org { color: #17325e; letter-spacing: .08em; font-size: 16px; }
   #top1 .sys .vsep { width: 1px; height: 18px; background: #cdd3da; margin: 0 4px; }
   #top1 .sys .env { font-size: 10px; font-weight: 400; color: #777; border: 1px solid #ccc; padding: 0 4px; border-radius: 2px; }
+  .sclock { display: flex; align-items: center; gap: 5px; margin-left: 14px; padding: 2px 8px; border: 1px solid #cdd3da; border-radius: 3px; background: #f7f9fc; font-size: 11.5px; color: #555; white-space: nowrap; }
+  .sclock b { color: #17325e; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .sclock .tz { font-size: 10px; color: #888; }
   #top1 .tog { display: flex; gap: 4px; margin-left: 10px; }
   #top1 .tog button { border-radius: 12px; padding: 1px 9px; }
   #top1 .tog button.on { background: #e9f0ff; border-color: var(--blue); color: var(--blue); }
@@ -298,6 +301,7 @@
   .abox .form { margin-top: 8px; padding: 8px; background: #fafafa; border: 1px solid var(--line2); grid-template-columns: repeat(4, 1fr); align-items: end; }
   .abox .form label.w { grid-column: 1 / -1; }
   .abox .form button { justify-content: center; }
+  .abox .actions { white-space: nowrap; }
   .abox .actions button { font-size: 11px; padding: 0 6px; }
   .abox .tot { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; font-size: 11.5px; }
   .abox .tot span { border: 1px solid var(--line2); background: #fafafa; padding: 2px 8px; }
@@ -330,7 +334,7 @@
     <div class="lg-org"><b>산림청</b><span>Korea Forest Service</span></div>
     <span class="lg-sep"></span>
     <div class="lg-sys">산불 대응 지휘 지원시스템<small>Wildfire Response Decision Support System</small></div>
-    <div class="lg-right"><span id="lg-clock" class="num">—</span><span>고객센터 1588-4370</span><span class="lg-env">시연</span></div>
+    <div class="lg-right"><span>현재 시각 <b id="lg-clock" class="num">—</b> KST</span><span>고객센터 1588-4370</span><span class="lg-env">시연</span></div>
   </div>
   <div class="lg-body">
     <div class="lg-card">
@@ -363,6 +367,7 @@
 <!-- 상단 1줄 -->
 <header id="top1">
   <div class="sys"><img class="logo" src="assets/logo.png" alt="정부 상징"><span class="org">산림청</span><span class="vsep"></span>산불 대응 지휘 지원시스템 <span class="env">시연</span></div>
+  <div class="sclock" title="서버 현재 시각 (한국표준시)">현재 시각 <b id="hdr-clock" class="num">—</b><span class="tz">KST</span></div>
   <div class="tog"><button id="btn-resources" class="cv-only">진화자원</button></div>
   <div class="menu">
     <button class="red menu-btn on" data-menu="status">산불현황</button>
@@ -516,6 +521,7 @@
 <div id="admin-screen">
   <header id="admin-top" style="height:40px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 10px">
     <div class="sys" style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#1c3f88"><img src="assets/logo.png" alt="" style="width:26px;height:26px;object-fit:contain"><span style="color:#17325e;letter-spacing:.08em;font-size:16px">산림청</span><span style="width:1px;height:18px;background:#cdd3da;margin:0 4px"></span>산불 대응 지휘 지원시스템 <span style="font-size:10px;font-weight:400;color:#777;border:1px solid #ccc;padding:0 4px;border-radius:2px">평시 관리</span></div>
+    <div class="sclock" title="서버 현재 시각 (한국표준시)">현재 시각 <b id="admin-clock" class="num">—</b><span class="tz">KST</span></div>
     <div style="margin-left:auto;font-size:11.5px;color:#444;display:flex;align-items:center;gap:6px"><span id="admin-user">—</span><button id="admin-logout" class="ibtn" title="로그아웃" style="width:24px;height:24px;padding:0;justify-content:center"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M21 4v16"/></svg></button></div>
   </header>
   <div id="admin-body">
