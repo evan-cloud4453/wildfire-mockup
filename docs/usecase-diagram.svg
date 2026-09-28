@@ -2,7 +2,7 @@
 <defs><marker id="arr" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#333" stroke-width="1.6"/></marker><marker id="arrg" markerWidth="12" markerHeight="12" refX="11" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L11,6 L1,11" fill="none" stroke="#8a8a8a" stroke-width="1.4"/></marker></defs>
 <rect x="0" y="0" width="1560" height="1040" fill="#ffffff"/>
 <rect x="300" y="60" width="1000" height="940" rx="6" fill="#f7f9fc" stroke="#555" stroke-width="1.8"/>
-<text x="800.0" y="94" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">산불 대응 지휘 지원시스템</text>
+<text x="800.0" y="94" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">산불 대응 AI 의사결정 지원 시스템</text>
 <rect x="318" y="740" width="320" height="230" rx="6" fill="none" stroke="#999" stroke-dasharray="6 4"/>
 <text x="330" y="762" font-size="13" fill="#666">평시(운영) 유스케이스</text>
 <text x="330" y="94" font-size="13" fill="#666">재난 시 유스케이스</text>
